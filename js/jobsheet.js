@@ -50,4 +50,8 @@ $('document').ready(function() {
         return false;
     }
     
+    $('#addNewLabour').click(function(){
+        $(this).parent().append($('#labour_template').html());
+    });
+    
 });

@@ -11,6 +11,7 @@ body {
 a {
 	color: #006db9;
 	text-decoration: none;
+    cursor: pointer;
 }
 a:hover {
 	color: #085b95;
@@ -298,6 +299,17 @@ tbody td {
     font-size: 14px;
     font-weight: bold;
 }
+
+#labour-details h3 {
+    margin-bottom: 0;
+}
+
+#labour-details input[type="text"], select {
+    width: 150px;
+    margin-right: 5px;
+}
+
+.labour-delete-btn { margin-bottom: -3px; }
 
 /**** Expense ****/
 #expense-search { 

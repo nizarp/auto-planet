@@ -66,10 +66,26 @@ class Jobsheet extends MY_Controller {
         
         $this->load->helper('form');
         $this->load->library('form_validation');     
+        $this->load->model('staff_model');
+        
         $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
         $data['title'] = 'Create Jobsheet';
         $data['tab'] = 'Jobsheet';
         $data['formName'] = 'jobsheet/create';
+        
+        $jobtypeList = array('' => 'Select');
+        $jobtypes = $this->jobsheet_model->getAllJobtypes();
+        foreach($jobtypes as $jobtype) {
+            $jobtypeList[$jobtype['id']] = $jobtype['type'];            
+        }
+        $data['jobtypes'] = $jobtypeList;
+        
+        $staffList = array('' => 'Select');
+        $staffs = $this->staff_model->getAll();
+        foreach($staffs as $staff) {
+            $staffList[$staff['id']] = $staff['name'];            
+        }
+        $data['staffs'] = $staffList;
         
         $data['jobsheet'] = array(
             "id" => '',
@@ -131,6 +147,8 @@ class Jobsheet extends MY_Controller {
         
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->load->model('staff_model');
+        
         $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
         $data['title'] = 'Edit Jobsheet';
         $data['tab'] = 'Jobsheet';
@@ -138,6 +156,21 @@ class Jobsheet extends MY_Controller {
         $data['jobsheet'] = $this->jobsheet_model->get($id);
         $data['jobsheet']['created_on'] = date('d/m/Y', strtotime($data['jobsheet']['created_on']));
         $data['jobsheet']['promised_date'] = date('d/m/Y', strtotime($data['jobsheet']['promised_date']));
+        $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($id);
+        
+        $jobtypeList = array('' => 'Select');
+        $jobtypes = $this->jobsheet_model->getAllJobtypes();
+        foreach($jobtypes as $jobtype) {
+            $jobtypeList[$jobtype['id']] = $jobtype['type'];            
+        }
+        $data['jobtypes'] = $jobtypeList;
+        
+        $staffList = array('' => 'Select');
+        $staffs = $this->staff_model->getAll();
+        foreach($staffs as $staff) {
+            $staffList[$staff['id']] = $staff['name'];            
+        }
+        $data['staffs'] = $staffList;
         
         $this->form_validation->set_message('alpha_space', 
                 'The %s field may only contain alphabetic and space characters.');

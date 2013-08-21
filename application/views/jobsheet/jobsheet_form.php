@@ -76,17 +76,64 @@
                     <textarea id="notes" name="notes" rows="9"><?= set_value('notes', $jobsheet['notes']) ?></textarea>
                 </p>
             </div>        
-
+        <div class="clear"></div>
     <!-- Header: Charges -->
-    
-        <div class="clear"></div>    
+    <div id="labour-details">
+        <h3>Labour Details:</h3>
+        <a id="addNewLabour">[Add New Labour]</a>
+        <div height="5px;">&nbsp;</div>
+        <?php if(isset($jobsheet['labour_charges'])) { ?>
+            <?php foreach ($jobsheet['labour_charges'] as $labourCharge) { ?>
+                <p>
+                    <? 
+                    echo form_dropdown(
+                            'labour_charges[]["job_type"]',
+                            $jobtypes,
+                            $labourCharge['job_type']
+                        );                                
+                     
+                    echo form_dropdown(
+                            'labour_charges[]["staff"]',
+                            $staffs,
+                            $labourCharge['staff']
+                        );            
+                    
+                    echo form_input(
+                            'labour_charges[]["amount"]',
+                            $labourCharge['amount']
+                        );
+                    ?>
+                    <img onClick="$(this).parent().remove();" class="labour-delete-btn" src="/css/images/x.gif">
+                </p>
+            <?php } ?>
+        <?php } ?>
     </div>
     
+    </div>    
     <div class="nextprev">
         <input type="submit" value="Save">
         <input type="button" onclick="window.location='/index.php/jobsheet'" value="Cancel">
     </div>
 </form>
+</div>
 
+<div id="labour_template" style="display:none;">
+    <p>
+        <? 
+        echo form_dropdown(
+                'labour_charges[]["job_type"]',
+                $jobtypes
+            );                                
 
+        echo form_dropdown(
+                'labour_charges[]["staff"]',
+                $staffs
+            );            
+
+        echo form_input(
+                'labour_charges[]["amount"]'
+            );
+        ?>
+        <img class="labour-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">
+    </p>
 </div>

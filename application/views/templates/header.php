@@ -19,7 +19,8 @@
                        <?php echo ($tab == 'Wage') ? 'class="menu-active"' : '' ?> >Wages</a></li>
                 <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/staff"
                        <?php echo ($tab == 'Staff') ? 'class="menu-active"' : '' ?> >Staffs</a></li>
-                <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/part">Parts</a></li>
+                <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/part"
+                       <?php echo ($tab == 'Part') ? 'class="menu-active"' : '' ?> >Parts</a></li>
                 <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/home/logout">Logout</a></li>
             </ul>
         </div>

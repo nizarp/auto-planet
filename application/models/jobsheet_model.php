@@ -34,5 +34,17 @@ Class Jobsheet_model extends MY_Model
         
     }    
     
+    function getLabourCharges($jobsheetId)
+    {
+        $data = $this->db->get_where('jobsheet_charges', array('jobsheet_id' => $jobsheetId));
+        return $data->result_array();
+    }
+    
+    function getAllJobtypes()
+    {
+        $data = $this->db->get('job_types');
+        return $data->result_array();
+    }
+    
 }
 ?>
