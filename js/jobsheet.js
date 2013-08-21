@@ -1,0 +1,53 @@
+$('document').ready(function() {    
+    
+    /** For datePicker **/
+    var datePickerOpts = {
+        createButton: false
+    };
+    
+    var promisedDp = $('#promised_date').datePicker(datePickerOpts);
+    var createdDp = $('#created_on').datePicker(datePickerOpts);    
+    $('#promised-date-btn').click(function(){ initDatePicker(promisedDp); });
+    $('#created-date-btn').click(function(){ initDatePicker(createdDp); });
+    
+    $('.jobsheet-delete-btn').click(function(){
+        if(confirm('Are you sure you want to delete this Jobsheet?')) {
+            self.location = '/index.php/jobsheet/delete/'+$(this).attr('rel');
+        }
+    });
+
+    $('.status').click(function () {
+        previous = $(this).val();
+    }).change(function(){
+        if($(this).val() == 'reopen') {
+            var password = prompt('Please enter Re-open Password');
+            if(password != null) {
+                if(hex_md5(password) == '5f4dcc3b5aa765d61d8327deb882cf99') {
+                    changeStatus($(this).attr('rel'), $(this).val());
+                } else {
+                    alert('Wrong Password!')
+                    $(this).val(previous);
+                }
+            } else {
+                $(this).val(previous);
+            }
+        } else {
+            changeStatus($(this).attr('rel'), $(this).val());
+        }
+    });
+    
+    changeStatus = function(id, status) 
+    {
+        var data = {'status' : status};
+        $.post('/index.php/jobsheet/update/'+id, {'data': data}, function(response){
+            console.log(response);
+        });
+    }
+    
+    initDatePicker = function(dpObj){
+    	dpObj.dpDisplay();
+        this.blur();
+        return false;
+    }
+    
+});

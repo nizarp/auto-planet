@@ -1,0 +1,327 @@
+html,body {
+	background: #f1f1f1;
+	margin: 0;
+}
+body {	
+	padding: 20px 10px 0;
+	font-family: Lucida Grande, Verdana, Geneva, Sans-serif;
+	font-size: 11px;
+	color: #464646;
+}
+a {
+	color: #006db9;
+	text-decoration: none;
+}
+a:hover {
+	color: #085b95;
+	text-decoration: underline;
+}
+h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+h2, h3, h4, h5 {
+    color: #000000;;
+    margin-top: 0;
+    font-size: 1.3em;
+}
+input[type="button"], input[type="submit"], input[type="reset"], .btn, button {
+    background: url("images/bkg-btn-grey.gif") repeat-x scroll 0 0 #EDEDED;
+    border: 1px solid #B7B7B7;
+    color: #000000;
+    font-size: 13px;
+    margin: 5px 10px 5px 0;
+    padding: 6px 18px 8px;
+    text-shadow: 0 1px 2px #FFFFFF;
+}
+label {
+    font-weight: bold;
+    display: block;
+    color: #000000;
+}
+input[type="text"], input[type="password"], textarea, select {
+    width: 250px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    font-size: 1.2em;
+    padding: 4px;
+}
+.page-header {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
+	height: 50px;
+}
+.page-header ul {
+	position: absolute;
+	top: 2px;
+	left: 490px;
+	background: none;
+	margin: 0;
+	padding: 0;
+	height: 30px;
+}
+.page-header li {
+	list-style-type: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+.page-header ul a {
+	background: #fff;
+	border-bottom: none;
+	padding: 5px 12px;
+	margin-right: 5px;
+	color: #666;
+	float: left;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.page-header ul a:hover {
+	background: #999;
+	text-decoration: none;
+	color: #fff
+}
+.page-header ul a.menu-active {
+	background: #326fd4;
+	color: #fff;
+}
+li {
+    cursor: pointer;
+}
+p {
+    margin: 0 0 10px 0;
+}
+.content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #C7CACD;
+    line-height: 1.5em;
+    padding: 0;
+    width: 1000px;
+}
+th { text-align: left; }
+#page {
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+}
+#menu-div { float: right }
+#copyright { 
+    font-size: 11px;
+    position: relative;
+    text-align: center;
+    top: 10px;
+}
+.row {
+    background: none repeat scroll 0 0 #F2F8FF;
+}
+table {
+    border-collapse: collapse;
+}
+thead th {
+    border-bottom: 2px solid #CCCCCC;
+    color: #000000;
+    font-weight: bold;
+    padding: 8px 5px;
+    text-align: left;
+}
+tbody td {
+    padding: 8px 5px;
+}
+.tab-header {
+	height: 40px;
+    position: relative;
+    top: 15px;
+    width: 100%;
+    left: 10px;
+}
+
+.btn-grn { 
+	background: #9acf0e url(images/bkg-button-grn.gif) repeat-x bottom;
+	position:absolute; 
+	top: 10px; 
+	right: 30px; 
+	display: inline-block;
+    padding: 6px 16px; 
+	font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: none;
+	border: none;
+    color: #fff; 
+	
+    -moz-border-radius: 16px; 
+    -webkit-border-radius: 16px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    cursor: pointer;
+}
+.btn-grn:hover { 
+    background: #88ba05 url(images/bkg-button-grn-hover.gif) repeat-x bottom; 
+    text-decoration: none;
+    color: #fff;
+}
+.banner-buttons {
+	right: 0;
+    text-align: right;
+}
+
+.grid_1, .grid_2 {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 450px;
+}
+
+.alpha { left: 0; }
+.beta { 
+    float: left; 
+}
+.clear { clear:both; }
+
+.nextprev {
+    background: url("images/bkg-prevnext.jpg") no-repeat scroll center top #DFDFDF;
+    height: 32px;
+    margin-top: 20px;
+    padding: 18px 30px 28px;
+    position: relative;
+}
+.banner {
+    background: url("images/bkg-banner.gif") repeat-x scroll center bottom #326FD4;
+    color: #C9D2D9;
+    padding: 10px 30px 0;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.banner h2 {
+    color: #FFFFFF;
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 1em;
+    margin: 0;
+    padding: 6px 0 16px;
+}
+
+.small { font-size: 9px; }
+.error { 
+    margin: 5px 0 10px 0; 
+}
+
+.blk { color: #000; }
+.gry { color: #666; }
+.red { color: #d51e24; }
+.orange { color: #ffc700; }
+.green { color: #90b239; }
+
+.pagination {
+    padding: 5px 0; 
+    float: right;
+    padding: 0 10px 5px 0;
+}
+
+.pagination a, .pagination strong { padding-left: 4px; }
+
+.highlight { background: none repeat scroll 0 0 #FFFFCC; }
+
+#search_btn { 
+    background: none repeat scroll 0 0 blue;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 3px 8px;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.75); 
+}
+
+.spacer { height: 20px; }
+/** For calendar **/
+.cal-input { 
+    background: url(images/bkg-cal.png) no-repeat; 
+    display: inline-block; 
+    width: 16px; 
+    height:16px; 
+    margin: 0 0 0 10px; 
+    cursor: pointer; 
+    vertical-align: middle; 
+}
+
+.grid-list{
+    margin: auto;
+    width: 98%;
+}
+
+/********** Login Page *******/
+#login-box {
+    width: 275px;
+    line-height: 2em;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 20px;
+    border: 1px solid #CCCCCC;
+    background: #FFFFFF;
+}
+.error-msg {
+    font-size: 10px;
+    color: red;
+    line-height: 1em;
+}
+#login-box #username, #login-box #password {
+    width: 265px;
+}
+
+/**** Jobsheet ****/
+#home-page .tab-header {
+    top: 0px;
+    height: 60px;
+}
+.jobsheet-edit-btn, .jobsheet-delete-btn {
+    cursor: pointer;
+}
+#jobsheet-form{
+    padding: 20px;
+}
+#promised_date, #created_on {width: 150px;}
+
+#jobsheet-search { 
+    float: right;
+    top: 10px;
+    padding: 10px 0;
+}
+#jobsheet-list select { width: auto;}
+
+.sub-header { 
+    float: left; 
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/**** Expense ****/
+#expense-search { 
+    float: right;
+    top: 10px;
+    padding: 10px 0;
+}
+
+#expense-search input[type="text"] {
+    width: 150px;
+}
+
+.expense-search-btn {
+    right: 20px;
+}
+
+/**** Dashboard Searches ****/
+#staff-search, #wage-search, #part-search { 
+    float: right;
+    top: 10px;
+    padding: 10px 0;
+}
+
+/**** Wage ****/
+#staff-dropdown { width: 160px; }
+#wage-form #amount { width: 150px; }
+#wage-form #description { width: 350px; }
