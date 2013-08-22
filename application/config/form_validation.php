@@ -30,7 +30,7 @@ $config = array(
               'field'   => 'reg_no', 
               'label'   => 'Registration Number', 
               'rules'   => 'required|registration_check|min_length[5]'
-           )            
+           )        
     ),
     'expense_form' => array(
         array(

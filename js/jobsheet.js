@@ -51,7 +51,15 @@ $('document').ready(function() {
     }
     
     $('#addNewLabour').click(function(){
-        $(this).parent().append($('#labour_template').html());
+        var newCount = parseInt($('#count').val()) + 1;
+        $(this).parent().append($('#labour_template').html().replace(/%count%/g, newCount));
+        $('#count').val(newCount);
+    });
+    
+    $('#addNewParts').click(function(){
+        var newCount = parseInt($('#part_count').val()) + 1;
+        $(this).parent().append($('#part_template').html().replace(/%count%/g, newCount));
+        $('#part_count').val(newCount);
     });
     
 });

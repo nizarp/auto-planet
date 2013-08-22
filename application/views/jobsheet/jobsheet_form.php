@@ -3,8 +3,11 @@
     echo script_tag('js/jobsheet.js');
     echo script_tag('js/lib/datePicker/date.js');
     echo script_tag('js/lib/datePicker/jquery.datePicker.min.js');
+    echo script_tag('js/lib/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.min.js');
+    echo script_tag('js/autocomplete.js');
     echo link_tag('js/lib/datePicker/datePicker.css');
     echo link_tag('css/datePicker.css');
+    echo link_tag('js/lib/jquery-ui-1.10.3/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
 ?>
 <div id="jobsheet-create">
 <?php echo form_open($formName) ?>
@@ -77,33 +80,70 @@
                 </p>
             </div>        
         <div class="clear"></div>
-    <!-- Header: Charges -->
+
     <div id="labour-details">
+        <p></p>
         <h3>Labour Details:</h3>
         <a id="addNewLabour">[Add New Labour]</a>
         <div height="5px;">&nbsp;</div>
+        <input type="hidden" id="count" value="<?php 
+        echo (isset($jobsheet['labour_charges'])) ? count($jobsheet['labour_charges']) : 0; ?>"/>
         <?php if(isset($jobsheet['labour_charges'])) { ?>
+            <?php $i = 1; ?>
             <?php foreach ($jobsheet['labour_charges'] as $labourCharge) { ?>
                 <p>
                     <? 
                     echo form_dropdown(
-                            'labour_charges[]["job_type"]',
+                            "labour_charges[$i][job_type]",
                             $jobtypes,
                             $labourCharge['job_type']
                         );                                
                      
                     echo form_dropdown(
-                            'labour_charges[]["staff"]',
+                            "labour_charges[$i][staff]",
                             $staffs,
                             $labourCharge['staff']
                         );            
                     
                     echo form_input(
-                            'labour_charges[]["amount"]',
-                            $labourCharge['amount']
+                            "labour_charges[$i][amount]",
+                            $labourCharge['amount'],
+                            'placeholder="Amount"'
                         );
+                    $i++;
                     ?>
-                    <img onClick="$(this).parent().remove();" class="labour-delete-btn" src="/css/images/x.gif">
+                    <img onClick="$(this).parent().remove();" class="item-delete-btn" src="/css/images/x.gif">
+                </p>
+            <?php } ?>
+        <?php } ?>
+    </div>
+    
+    <div id="parts-details">
+        <p></p>
+        <h3>Parts Used:</h3>
+        <a id="addNewParts">[Add New Parts]</a>
+        <div height="5px;">&nbsp;</div>
+        <input type="hidden" id="part_count" value="<?php 
+        echo (isset($jobsheet['jobsheet_parts'])) ? count($jobsheet['jobsheet_parts']) : 0; ?>"/>
+        <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
+            <?php $i = 1; ?>
+            <?php foreach ($jobsheet['jobsheet_parts'] as $part) { ?>
+                <p class="ui-widget">
+                    <? 
+                    echo form_dropdown(
+                            "jobsheet_parts[$i][part_id]",
+                            $parts,
+                            $part['part_id'],
+                            'class="combobox"'
+                        );                    
+                    echo form_input(
+                            "jobsheet_parts[$i][qty]",
+                            $part['qty'],
+                            'placeholder="Quantity"'
+                        );
+                    $i++;
+                    ?>
+                    <img onClick="$(this).parent().remove();" class="item-delete-btn" src="/css/images/x.gif">
                 </p>
             <?php } ?>
         <?php } ?>
@@ -121,19 +161,39 @@
     <p>
         <? 
         echo form_dropdown(
-                'labour_charges[]["job_type"]',
+                'labour_charges[%count%][job_type]',
                 $jobtypes
             );                                
 
         echo form_dropdown(
-                'labour_charges[]["staff"]',
+                'labour_charges[%count%][staff]',
                 $staffs
             );            
 
         echo form_input(
-                'labour_charges[]["amount"]'
+                'labour_charges[%count%][amount]',
+                '',
+                'placeholder="Amount"'
             );
         ?>
-        <img class="labour-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">
+        <img class="item-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">
+    </p>
+</div>
+<div id="part_template" style="display:none;">
+    <p class="ui-widget">        
+        <? 
+        echo form_dropdown(
+                "jobsheet_parts[%count%][part_id]",
+                $parts,
+                '',
+                'class="combobox"'
+            );                    
+        echo form_input(
+                "jobsheet_parts[%count%][qty]",
+                '',
+                'placeholder="Quantity"'
+            );
+        ?>
+        <img class="item-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">
     </p>
 </div>
