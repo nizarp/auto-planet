@@ -47,9 +47,7 @@
                     <td><?php echo date('M d, Y', strtotime($staff['created_on'])) ?></td>
                     <td>
                         <img onclick="window.location='/index.php/staff/edit/<?php echo $staff['id'] ?>'" 
-                             src="/css/images/edit.png">
-                        <img class="staff-delete-btn" rel="<?php echo $staff['id'] ?>" 
-                             src="/css/images/delete.png">
+                             src="/css/images/edit.png">                        
                     </td>
                 </tr>
                 <?php endforeach ?>

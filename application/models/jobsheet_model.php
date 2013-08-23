@@ -68,5 +68,64 @@ Class Jobsheet_model extends MY_Model
         }
     }
     
+    function updateJobsheetParts($jobsheetId, $partsData)
+    {
+        $this->deleteJobsheetParts($jobsheetId);
+        
+        foreach($partsData as $part) {
+            
+            // Assign parts to Jobsheet
+            $data = array(
+                'jobsheet_id' => $jobsheetId,
+                'part_id' => $part['part_id'],
+                'qty' => $part['qty']
+            );            
+            $this->db->insert('jobsheet_parts', $data);
+            
+            // Minus from existing stock
+            $this->db->where('part_id', $part['part_id']);
+            $this->db->set('quantity', "quantity - ".$part['qty'], FALSE);
+            $this->db->update('parts_stock');
+        }
+    }
+    
+    function deleteJobsheetParts($jobsheetId) 
+    {
+        $this->db->select('jobsheet_id, parts.id, qty, quantity as stock');
+        $this->db->from('jobsheet_parts');
+        $this->db->join('parts', 'parts.id = jobsheet_parts.part_id', 'left');
+        $this->db->join('parts_stock', 'parts_stock.part_id = parts.id', 'left');
+        $this->db->where('jobsheet_parts.jobsheet_id', $jobsheetId);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        
+        // Add parts to existing stock
+        foreach($data as $partsData) {
+            $updateData = array(
+                'quantity' => $partsData['stock'] + $partsData['qty']
+            );
+            $this->db->where('part_id', $partsData['id']);            
+            $this->db->update('parts_stock', $updateData);            
+        }
+        
+        // Delete Jobsheet Parts
+        $this->db->where('jobsheet_id', $jobsheetId);
+        $this->db->delete('jobsheet_parts');
+        
+    }
+    
+    function getPartsCount($id, $partId)
+    {
+        $this->db->where('part_id', $partId);
+        $this->db->where('jobsheet_id', $id);
+        $query = $this->db->get('jobsheet_parts');
+        $data = $query->row_array();
+        if(isset($data['qty'])) {
+            return $data['qty'];
+        }
+        
+        return 0;
+    }
+    
 }
 ?>

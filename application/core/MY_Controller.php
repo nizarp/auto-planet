@@ -10,7 +10,8 @@ class MY_Controller extends CI_Controller {
     public function requireLogin() {
         if($this->session->userdata('logged_in'))
         {
-            return TRUE;
+            $userData = $this->session->userdata('logged_in');
+            return $userData;
         } else {
             redirect('login', 'refresh');
         }

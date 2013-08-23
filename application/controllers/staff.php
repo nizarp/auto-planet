@@ -15,7 +15,8 @@ class Staff extends MY_Controller {
 
     function index()
     {
-        parent::requireLogin();   
+        $userData = parent::requireLogin();
+        $data['username'] = $userData['username'];
         
         $offset = $this->uri->segment(3, 1);
         $keyword = $this->input->get('search');
@@ -47,14 +48,22 @@ class Staff extends MY_Controller {
         redirect('staff/page/1?search='.$keyword);
     }
     
-    function delete($id)
+    /*function delete($id)
     {
-        parent::requireLogin();
+        $userData = parent::requireLogin();
         
-        $this->staff_model->delete($id);
+        if($userData['username'] != 'admin') {
+            redirect('staff', 'refresh');
+        } else {
+            $wages = $this->staff_mdel->getWages($id);
+            if(count($wage) > 0) {
+                redirect('staff?error=wage', 'refresh');
+            }
+            $this->staff_model->delete($id);
+        }
         
         redirect('staff', 'refresh');
-    }
+    }*/
     
     function create()
     {

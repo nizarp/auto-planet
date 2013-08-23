@@ -15,7 +15,8 @@ class Wage extends MY_Controller {
 
     function index()
     {
-        parent::requireLogin();   
+        $userData = parent::requireLogin();
+        $data['username'] = $userData['username'];
         
         $this->load->helper('text');
         $this->load->library('pagination');
@@ -57,9 +58,13 @@ class Wage extends MY_Controller {
     
     function delete($id)
     {
-        parent::requireLogin();
+        $userData = parent::requireLogin();
         
-        $this->wage_model->delete($id);
+        if($userData['username'] != 'admin') {
+            redirect('wage', 'refresh');
+        } else {
+            $this->wage_model->delete($id);
+        }
         
         redirect('wage', 'refresh');
     }

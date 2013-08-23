@@ -15,13 +15,15 @@ class Jobsheet extends MY_Controller {
 
     function index()
     {
-        parent::requireLogin();   
+        $userData = parent::requireLogin();
+        $data['username'] = $userData['username'];
         
         $offset = $this->uri->segment(3, 1);
         $keyword = $this->input->get('search');
         
         $data['title'] = 'Jobsheet';
         $data['tab'] = 'Jobsheet';
+        
         $limit = 10;
         $data['jobsheets'] = $this->jobsheet_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
@@ -47,9 +49,13 @@ class Jobsheet extends MY_Controller {
     
     function delete($id)
     {
-        parent::requireLogin();
+        $userData = parent::requireLogin();
         
-        $this->jobsheet_model->delete($id);
+        if($userData['username'] != 'admin') {
+            redirect('jobsheet', 'refresh');
+        } else {        
+            $this->jobsheet_model->delete($id);
+        }
         
         redirect('jobsheet', 'refresh');
     }    
@@ -91,7 +97,7 @@ class Jobsheet extends MY_Controller {
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
-            $partsList[$part['id']] = $part['name'];            
+            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];
         }
         $data['parts'] = $partsList;
         
@@ -123,7 +129,7 @@ class Jobsheet extends MY_Controller {
         if(!empty($labourInput)) 
         {
             $data['jobsheet']['labour_charges'] = $labourInput;
-            foreach(array_keys($this->input->post('labour_charges')) as $key) 
+            foreach(array_keys($labourInput) as $key) 
             {
                 $config[] = array(
                     'field' => "labour_charges[$key][job_type]",
@@ -142,6 +148,28 @@ class Jobsheet extends MY_Controller {
                 );
             }
         }        
+        
+        $partsInput = $this->input->post('jobsheet_parts');
+        if(!empty($partsInput)) 
+        {
+            $data['jobsheet']['jobsheet_parts'] = $partsInput;
+            foreach(array_keys($partsInput) as $key) 
+            {
+                $stock = $this->part_model->getStock($partsInput[$key]['part_id']) + 1;
+                $config[] = array(
+                    'field' => "jobsheet_parts[$key][part_id]",
+                    'label' => "Parts Name",
+                    'rules' => "required"
+                );
+                $config[] = array(
+                    'field' => "jobsheet_parts[$key][qty]",
+                    'label' => "Quantity".(isset($partsInput[$key]['part_id']) 
+                        ? ' for "'. $partsList[$partsInput[$key]['part_id']]. '" ' : '' ),
+                    'rules' => "required|numeric|less_than[$stock]"
+                );
+            }
+        }        
+        
         $this->form_validation->set_rules($config);
         
         if ($this->form_validation->run() == FALSE)
@@ -172,14 +200,58 @@ class Jobsheet extends MY_Controller {
             $this->jobsheet_model->create($data);
             $jobsheetId = $this->db->insert_id();
             
-            if($jobsheetId) {
-                $labourData = $this->input->post('labour_charges');
-                $this->jobsheet_model->updateJobsheetCharges($jobsheetId, $labourData);
+            if($jobsheetId) {                
+                // Update Labour charges
+                $this->jobsheet_model->updateJobsheetCharges($jobsheetId, $labourInput);
+
+                // Update Jobsheet Parts
+                $this->jobsheet_model->updateJobsheetParts($jobsheetId, $partsInput);
             }            
             
             redirect('jobsheet', 'refresh');
         }
         
+        
+    }
+    
+    function view($id)
+    {
+        parent::requireLogin();
+        
+        $this->load->model('staff_model');
+        $this->load->model('part_model');
+        
+        $data['title'] = 'Jobsheet Summary';
+        $data['tab'] = 'Jobsheet';        
+        
+        $data['jobsheet'] = $this->jobsheet_model->get($id);
+        $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($id);
+        $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($id);
+        
+        $jobtypeList = array('' => 'Select Jobtype');
+        $jobtypes = $this->jobsheet_model->getAllJobtypes();
+        foreach($jobtypes as $jobtype) {
+            $jobtypeList[$jobtype['id']] = $jobtype['type'];            
+        }
+        $data['jobtypes'] = $jobtypeList;
+        
+        $staffList = array('' => 'Select Staff');
+        $staffs = $this->staff_model->getAll();
+        foreach($staffs as $staff) {
+            $staffList[$staff['id']] = $staff['name'];            
+        }
+        $data['staffs'] = $staffList;
+        
+        $partsList = array('' => 'Select Part');
+        $parts = $this->part_model->getAll();
+        foreach($parts as $part) {
+            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];            
+        }
+        $data['parts'] = $partsList;
+        
+        $this->load->view('templates/header', $data);
+        $this->load->view('jobsheet/jobsheet_summary', $data);
+        $this->load->view('templates/footer');        
         
     }
     
@@ -191,6 +263,11 @@ class Jobsheet extends MY_Controller {
         $this->load->library('form_validation');
         $this->load->model('staff_model');
         $this->load->model('part_model');
+        
+        $data['jobsheet'] = $this->jobsheet_model->get($id);
+        if($data['jobsheet']['status'] == 'complete' || $data['jobsheet']['status'] == 'close') {
+            redirect('jobsheet/view/'.$id);
+        }
         
         $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
         $data['title'] = 'Edit Jobsheet';
@@ -219,7 +296,7 @@ class Jobsheet extends MY_Controller {
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
-            $partsList[$part['id']] = $part['name'];            
+            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];            
         }
         $data['parts'] = $partsList;
         
@@ -235,7 +312,7 @@ class Jobsheet extends MY_Controller {
         if(!empty($labourInput)) 
         {
             $data['jobsheet']['labour_charges'] = $labourInput;
-            foreach(array_keys($this->input->post('labour_charges')) as $key) 
+            foreach(array_keys($labourInput) as $key) 
             {
                 $config[] = array(
                     'field' => "labour_charges[$key][job_type]",
@@ -254,6 +331,31 @@ class Jobsheet extends MY_Controller {
                 );
             }
         }
+        
+        $partsInput = $this->input->post('jobsheet_parts');
+        if(!empty($partsInput)) 
+        {
+            $data['jobsheet']['jobsheet_parts'] = $partsInput;
+            foreach(array_keys($partsInput) as $key) 
+            {
+                $stock = $this->part_model->getStock($partsInput[$key]['part_id']) 
+                        + $this->jobsheet_model->getPartsCount($id, $partsInput[$key]['part_id'])
+                        + 1;
+                $config[] = array(
+                    'field' => "jobsheet_parts[$key][part_id]",
+                    'label' => "Parts Name",
+                    'rules' => "required"
+                );
+                $config[] = array(
+                    'field' => "jobsheet_parts[$key][qty]",
+                    'label' => "Quantity".(isset($partsInput[$key]['part_id']) 
+                        ? ' for "'. $partsList[$partsInput[$key]['part_id']]. '" ' : '' ),
+                    'rules' => "required|numeric|less_than[$stock]"
+                );
+            }
+        }
+        
+        
         $this->form_validation->set_rules($config);
         
         if ($this->form_validation->run() == FALSE)
@@ -284,8 +386,11 @@ class Jobsheet extends MY_Controller {
             
             $this->jobsheet_model->update($id, $data);
             
-            $labourData = $this->input->post('labour_charges');
-            $this->jobsheet_model->updateJobsheetCharges($id, $labourData);
+            // Update Labour charges
+            $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
+            
+            // Update Jobsheet Parts
+            $this->jobsheet_model->updateJobsheetParts($id, $partsInput);
             
             redirect('jobsheet', 'refresh');
         }

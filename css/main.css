@@ -321,6 +321,26 @@ tbody td {
 
 .item-delete-btn { margin-bottom: -3px; }
 
+.summary-sno { 
+    width: 25px; 
+    float: left;
+}
+.summary-jobtype { 
+    width: 150px; 
+    float: left;
+}
+.summary-staff { 
+    width: 200px; 
+    float: left;
+}
+.summary-amount { 
+    width: 100px; 
+    float: left;
+}
+.summary-part { 
+    width: 300px; 
+    float: left;
+}
 
 /**** For Autocomplete ****/
 .custom-combobox {
@@ -379,3 +399,20 @@ tbody td {
 #staff-dropdown { width: 160px; }
 #wage-form #amount { width: 150px; }
 #wage-form #description { width: 350px; }
+
+.ui-button-icon-only {
+    height: 23px !important;
+    bottom: 1px !important;
+    top: -2px !important;
+    width: 2.2em !important;    
+}
+
+/**** Impromptu ****/
+div.jqi button {
+    border: 1px solid #C4CCCC !important;
+    color: #000000 !important;
+    font-size: 12px !important;
+    margin: 0 10px !important;
+    padding: 3px 10px !important;
+    font-weight: normal !important;
+}

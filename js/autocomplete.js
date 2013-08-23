@@ -132,8 +132,4 @@
     $.each($('.combobox'), function(){
         $(this).combobox();
     });
-    //$( "#combobox" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#combobox" ).toggle();
-    });
   });

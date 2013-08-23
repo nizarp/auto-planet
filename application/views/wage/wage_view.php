@@ -58,8 +58,10 @@
                     <td>
                         <img onclick="window.location='/index.php/wage/edit/<?php echo $wage['id'] ?>'" 
                              src="/css/images/edit.png">
+                        <?php if($username == 'admin'): ?>
                         <img class="wage-delete-btn" rel="<?php echo $wage['id'] ?>" 
                              src="/css/images/delete.png">
+                        <? endif; ?>
                     </td>
                 </tr>
                 <?php endforeach ?>

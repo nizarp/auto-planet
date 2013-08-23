@@ -7,7 +7,7 @@
     echo script_tag('js/autocomplete.js');
     echo link_tag('js/lib/datePicker/datePicker.css');
     echo link_tag('css/datePicker.css');
-    echo link_tag('js/lib/jquery-ui-1.10.3/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
+    echo link_tag('js/lib/jquery-ui-1.10.3/css/smoothness/jquery-ui-1.10.3.custom.min.css');
 ?>
 <div id="jobsheet-create">
 <?php echo form_open($formName) ?>
@@ -90,7 +90,7 @@
         echo (isset($jobsheet['labour_charges'])) ? count($jobsheet['labour_charges']) : 0; ?>"/>
         <?php if(isset($jobsheet['labour_charges'])) { ?>
             <?php $i = 1; ?>
-            <?php foreach ($jobsheet['labour_charges'] as $labourCharge) { ?>
+            <?php foreach ($jobsheet['labour_charges'] as $labourCharge) { ?>                
                 <p>
                     <? 
                     echo form_dropdown(
@@ -128,6 +128,7 @@
         <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
             <?php $i = 1; ?>
             <?php foreach ($jobsheet['jobsheet_parts'] as $part) { ?>
+                <div class="clear"></div>
                 <p class="ui-widget">
                     <? 
                     echo form_dropdown(
@@ -145,6 +146,7 @@
                     ?>
                     <img onClick="$(this).parent().remove();" class="item-delete-btn" src="/css/images/x.gif">
                 </p>
+                <div class="clear"></div>
             <?php } ?>
         <?php } ?>
     </div>
@@ -180,13 +182,14 @@
     </p>
 </div>
 <div id="part_template" style="display:none;">
+    <div class="clear"></div>
     <p class="ui-widget">        
         <? 
         echo form_dropdown(
                 "jobsheet_parts[%count%][part_id]",
                 $parts,
                 '',
-                'class="combobox"'
+                'class="combobox-%count%"'
             );                    
         echo form_input(
                 "jobsheet_parts[%count%][qty]",
@@ -196,4 +199,5 @@
         ?>
         <img class="item-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">
     </p>
+    <div class="clear"></div>
 </div>

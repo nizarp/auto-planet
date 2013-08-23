@@ -52,8 +52,10 @@
                     <td>
                         <img onclick="window.location='/index.php/expense/edit/<?php echo $expense['id'] ?>'" 
                              src="/css/images/edit.png">
+                        <?php if($username == 'admin'): ?>
                         <img class="expense-delete-btn" rel="<?php echo $expense['id'] ?>" 
                              src="/css/images/delete.png">
+                        <? endif; ?>
                     </td>
                 </tr>
                 <?php endforeach ?>

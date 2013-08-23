@@ -43,5 +43,10 @@ Class Staff_model extends MY_Model
         return $roles;
     }
     
+    function getWages($staffId) {
+        $query = $this->db->get_where('wages', array('staff' => $staffId));
+        return $query->result_array();
+    }
+    
 }
 ?>

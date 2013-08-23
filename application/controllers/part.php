@@ -15,7 +15,8 @@ class Part extends MY_Controller {
 
     function index()
     {
-        parent::requireLogin();   
+        $userData = parent::requireLogin();
+        $data['username'] = $userData['username'];
         
         $this->load->helper('text');
         
@@ -47,14 +48,20 @@ class Part extends MY_Controller {
         redirect('part/page/1?search='.$keyword);
     }
     
+    /*
     function delete($id)
     {
-        parent::requireLogin();
+        $userData = parent::requireLogin();
         
-        $this->part_model->delete($id);
+        if($userData['username'] != 'admin') {
+            redirect('part', 'refresh');
+        } else {
+            $this->part_model->delete($id);
+        }
         
         redirect('part', 'refresh');
     }
+    */
     
     function create()
     {

@@ -16,7 +16,7 @@ $('document').ready(function() {
         }
     });
 
-    $('.status').click(function () {
+    $('.jobsheet-status').click(function () {
         previous = $(this).val();
     }).change(function(){
         if($(this).val() == 'reopen') {
@@ -25,20 +25,25 @@ $('document').ready(function() {
                 if(hex_md5(password) == '5f4dcc3b5aa765d61d8327deb882cf99') {
                     changeStatus($(this).attr('rel'), $(this).val());
                 } else {
-                    alert('Wrong Password!')
+                    $.prompt('Wrong Password!')
                     $(this).val(previous);
                 }
             } else {
                 $(this).val(previous);
             }
         } else {
-            changeStatus($(this).attr('rel'), $(this).val());
+            if($(this).val() == 'open') {
+                $.prompt('You can not change a status to Open. Please use Reopen instead.');
+                $(this).val(previous);
+            } else {
+                changeStatus($(this).attr('rel'), $(this).val());
+            }
         }
     });
     
     changeStatus = function(id, status) 
     {
-        var data = {'status' : status};
+        var data = {'status' : status};        
         $.post('/index.php/jobsheet/update/'+id, {'data': data}, function(response){
             console.log(response);
         });
@@ -60,6 +65,10 @@ $('document').ready(function() {
         var newCount = parseInt($('#part_count').val()) + 1;
         $(this).parent().append($('#part_template').html().replace(/%count%/g, newCount));
         $('#part_count').val(newCount);
+        
+        $.each($('.combobox-'+newCount), function(){
+            $(this).combobox();
+        });
     });
     
 });

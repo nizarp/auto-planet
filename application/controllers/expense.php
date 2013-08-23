@@ -15,7 +15,8 @@ class Expense extends MY_Controller {
 
     function index()
     {
-        parent::requireLogin();   
+        $userData = parent::requireLogin();
+        $data['username'] = $userData['username']; 
         
         $offset = $this->uri->segment(3, 1);
         $keyword = $this->input->get('search');
@@ -52,9 +53,13 @@ class Expense extends MY_Controller {
     
     function delete($id)
     {
-        parent::requireLogin();
+        $userData = parent::requireLogin();
         
-        $this->expense_model->delete($id);
+        if($userData['username'] != 'admin') {
+            redirect('expense', 'refresh');
+        } else {
+            $this->expense_model->delete($id);
+        }
         
         redirect('expense', 'refresh');
     }    

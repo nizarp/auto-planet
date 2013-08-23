@@ -16,6 +16,7 @@ Class Part_model extends MY_Model
         $this->db->join('parts_stock', 'parts_stock.part_id = parts.id', 'left');
         if($keyword != '') {
             $this->db->like('name', $keyword);
+            $this->db->or_like('parts.id', $keyword);
         }
         $this->db->order_by("name");
         if($limit > 0) {
@@ -33,6 +34,17 @@ Class Part_model extends MY_Model
         $this->db->from($this->_table);
         return $this->db->count_all_results();
         
+    }
+    
+    function getStock($partId)
+    {
+        $query = $this->db->get_where('parts_stock', array('part_id' => $partId));
+        $data = $query->row_array();
+        if(isset($data['quantity'])) {
+            return $data['quantity'];
+        }
+        
+        return 0;
     }
     
 }

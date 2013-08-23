@@ -5,8 +5,10 @@
     echo script_tag('js/lib/datePicker/jquery.datePicker.min.js');
     echo script_tag('js/jobsheet.js');
     echo script_tag('js/lib/md5-min.js');
+    echo script_tag('js/lib/jquery_impromptu/jquery-impromptu.js');
     echo link_tag('js/lib/datePicker/datePicker.css');
     echo link_tag('css/datePicker.css');
+    echo link_tag('js/lib/jquery_impromptu/jquery-impromptu.css');
 ?>
 
     <div id="home-page">
@@ -56,24 +58,27 @@
                     <td><?php echo date('M d, Y', strtotime($jobsheet['created_on'])) ?></td>
                     <td><?php echo date('M d, Y', strtotime($jobsheet['promised_date'])) ?></td>
                     <td>
+                        <?php
+                        $statuses = array(
+                            'open' => 'Open',
+                            'complete' => 'Complete',
+                            'close' => 'Close',
+                            'reopen' => 'Reopen'
+                        );                        
+                        ?>
                         <select class="jobsheet-status" rel="<?php echo $jobsheet['id'] ?>">
-                            <option value="open" 
-                                <?php echo ($jobsheet['status'] == 'open') ? 'Selected' : '' ?>>
-                                Open</option>
-                            <option value="complete" 
-                                <?php echo ($jobsheet['status'] == 'complete') ? 'Selected' : '' ?>>
-                                Complete</option>
-                            <option value="close" 
-                                <?php echo ($jobsheet['status'] == 'close') ? 'Selected' : '' ?>>
-                                Close</option>
-                            <option value="reopen"
-                                <?php echo ($jobsheet['status'] == 'reopen') ? 'Selected' : '' ?>>
-                                Reopen</option>
+                            <?php foreach($statuses as $key => $val): ?>
+                                <option value="<?= $key ?>"
+                                    <?php echo ($jobsheet['status'] == $key) ? ' selected' : '' ?>>
+                                    <?= $val ?></option>
+                            <?php endforeach; ?>                            
                         </select>
                     </td>
                     <td>
                         <img onclick="window.location='/index.php/jobsheet/edit/<?php echo $jobsheet['id'] ?>'" src="/css/images/edit.png">
+                        <?php if($username == 'admin'): ?>
                         <img class="jobsheet-delete-btn" rel="<?php echo $jobsheet['id'] ?>" src="/css/images/delete.png">
+                        <? endif; ?>
                     </td>
                 </tr>
                 <?php endforeach ?>

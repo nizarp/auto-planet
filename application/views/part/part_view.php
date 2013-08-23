@@ -15,7 +15,7 @@
         <?php echo form_open('part/search'); ?>
             <div id="part-search">
                 <input type="text" name="search" value="<?php echo $keyword; ?>" 
-                       placeholder="Enter Name"/>
+                       placeholder="Enter Name or Part ID"/>
                 <input type="submit" value="Go" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
@@ -48,9 +48,7 @@
                     <td class="edit_area" id="<?php echo $part['id']; ?>"><?php echo ($part['quantity']) ? $part['quantity'] : 0 ?></td>
                     <td>
                         <img onclick="window.location='/index.php/part/edit/<?php echo $part['id'] ?>'" 
-                             src="/css/images/edit.png">
-                        <img class="part-delete-btn" rel="<?php echo $part['id'] ?>" 
-                             src="/css/images/delete.png">
+                             src="/css/images/edit.png">                        
                     </td>
                 </tr>
                 <?php endforeach ?>
