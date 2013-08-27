@@ -112,6 +112,7 @@ class Jobsheet extends MY_Controller {
             "chassis_no" => '',
             "engine_no" => '',
             "promised_date" => '',
+            "delivered_date" => '',
             "estimated_amount" => '',
             "status" => '',
             "notes" => ''
@@ -124,6 +125,15 @@ class Jobsheet extends MY_Controller {
         
         $this->config->load('form_validation');
         $config = $this->config->item('jobsheet_form');
+        
+        $config[] = array(
+            'field' => "delivered_date",
+            'label' => "Delivered Date",
+            'rules' => "delivered_date_check[".$this->input->post('created_on')."]"
+        );
+        
+        $this->form_validation->set_message('delivered_date_check', 
+                'The %s should be greater than Jobsheet Date.');
         
         $labourInput = $this->input->post('labour_charges');
         if(!empty($labourInput)) 
@@ -191,6 +201,10 @@ class Jobsheet extends MY_Controller {
                 "engine_no" => $this->input->post('engine_no'),
                 "promised_date" => 
                     date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('promised_date')))),
+                "delivered_date" => 
+                ($this->input->post('delivered_date') != '')
+                    ? date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('delivered_date'))))
+                    : NULL,
                 "estimated_amount" => 
                     round($this->input->post('estimated_amount'),2),
                 "status" => $this->input->post('status'),
@@ -202,10 +216,14 @@ class Jobsheet extends MY_Controller {
             
             if($jobsheetId) {                
                 // Update Labour charges
-                $this->jobsheet_model->updateJobsheetCharges($jobsheetId, $labourInput);
+                if(!empty($labourInput)) {
+                    $this->jobsheet_model->updateJobsheetCharges($jobsheetId, $labourInput);
+                }
 
                 // Update Jobsheet Parts
-                $this->jobsheet_model->updateJobsheetParts($jobsheetId, $partsInput);
+                if(!empty($partsInput)) {
+                    $this->jobsheet_model->updateJobsheetParts($jobsheetId, $partsInput);
+                }
             }            
             
             redirect('jobsheet', 'refresh');
@@ -276,6 +294,10 @@ class Jobsheet extends MY_Controller {
         $data['jobsheet'] = $this->jobsheet_model->get($id);
         $data['jobsheet']['created_on'] = date('d/m/Y', strtotime($data['jobsheet']['created_on']));
         $data['jobsheet']['promised_date'] = date('d/m/Y', strtotime($data['jobsheet']['promised_date']));
+        $data['jobsheet']['delivered_date'] = 
+                (!empty($data['jobsheet']['delivered_date'])) 
+                ? date('d/m/Y', strtotime($data['jobsheet']['delivered_date'])) 
+                : '';
         $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($id);
         $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($id);
         
@@ -308,6 +330,15 @@ class Jobsheet extends MY_Controller {
         $this->config->load('form_validation');
         $config = $this->config->item('jobsheet_form');
         
+        $config[] = array(
+            'field' => "delivered_date",
+            'label' => "Delivered Date",
+            'rules' => "delivered_date_check[".$this->input->post('created_on')."]"
+        );
+        
+        $this->form_validation->set_message('delivered_date_check', 
+                'The %s should be greater than Jobsheet Date.');
+        
         $labourInput = $this->input->post('labour_charges');
         if(!empty($labourInput)) 
         {
@@ -328,7 +359,7 @@ class Jobsheet extends MY_Controller {
                     'field' => "labour_charges[$key][amount]",
                     'label' => "Labour Amount",
                     'rules' => "required|numeric"
-                );
+                );                
             }
         }
         
@@ -378,6 +409,10 @@ class Jobsheet extends MY_Controller {
                 "engine_no" => $this->input->post('engine_no'),
                 "promised_date" => 
                     date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('promised_date')))),
+                "delivered_date" => 
+                    ($this->input->post('delivered_date') != '')
+                    ? date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('delivered_date'))))
+                    : NULL,
                 "estimated_amount" => 
                     round($this->input->post('estimated_amount'),2),
                 "status" => $this->input->post('status'),
@@ -387,10 +422,14 @@ class Jobsheet extends MY_Controller {
             $this->jobsheet_model->update($id, $data);
             
             // Update Labour charges
-            $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
+            if(!empty($labourInput)) {
+                $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
+            }
             
             // Update Jobsheet Parts
-            $this->jobsheet_model->updateJobsheetParts($id, $partsInput);
+            if(!empty($partsInput)) {
+                $this->jobsheet_model->updateJobsheetParts($id, $partsInput);
+            }
             
             redirect('jobsheet', 'refresh');
         }

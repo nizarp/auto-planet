@@ -14,6 +14,7 @@ Class Jobsheet_model extends MY_Model
         if($keyword != '') {
             $this->db->like('name', $keyword);
             $this->db->or_like('reg_no', $keyword);
+            $this->db->or_like('chassis_no', $keyword);
         }
         $this->db->order_by("created_on", "desc");
         if($limit > 0) {

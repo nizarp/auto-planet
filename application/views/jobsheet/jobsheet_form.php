@@ -47,6 +47,13 @@
                     <span id="promised-date-btn" class="cal-input"></span>
                 </p>
                 <p>
+                    <label for="delivered_date">Delivered Date:</label>
+                    <input type="text" id="delivered_date" name="delivered_date" class="dp-applied" 
+                           placeholder="__ /__ /____" readonly="readonly"
+                           value="<?= set_value('delivered_date', $jobsheet['delivered_date']) ?>"/>
+                    <span id="delivered-date-btn" class="cal-input"></span>
+                </p>
+                <p>
                     <label for="estimated_amount">Estimated Amount:</label>
                     <input type="text" id="estimated_amount" name="estimated_amount"
                            value="<?= set_value('estimated_amount', $jobsheet['estimated_amount']) ?>"/>

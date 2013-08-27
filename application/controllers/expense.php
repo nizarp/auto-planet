@@ -43,10 +43,10 @@ class Expense extends MY_Controller {
     {
         if($this->input->post('search') != '') {
             $date = $this->input->post('search');
+            $keyword = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
         } else {
-            $date = '';
-        }
-        $keyword = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+            $keyword = '';
+        }        
         
         redirect('expense/page/1?search='.$keyword);
     }

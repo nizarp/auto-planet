@@ -12,7 +12,7 @@
             <ul>
                 <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/home" 
                        <?php echo ($tab == 'Jobsheet') ? 'class="menu-active"' : '' ?> >Jobsheets</a></li>
-                <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/bills">Bills</a></li>
+                <li><a tabindex="-1" href="#">Bills</a></li>
                 <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/expense"
                        <?php echo ($tab == 'Expense') ? 'class="menu-active"' : '' ?> >Expenses</a></li>
                 <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/wage" 

@@ -33,5 +33,20 @@ class MY_Form_validation extends CI_Form_validation{
         }
     }
     
+    function delivered_date_check($deliveredDate, $jobsheetDate)
+    {
+        $deliveredTime = strtotime(str_replace('/', '-', $deliveredDate));
+        $jobsheetTime = strtotime(str_replace('/', '-', $jobsheetDate));
+        
+        if($jobsheetTime > $deliveredTime) 
+        {
+            return FALSE;
+        }
+        else 
+        {
+            return TRUE;
+        }
+    }
+    
 }
 ?>

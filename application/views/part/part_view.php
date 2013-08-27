@@ -47,8 +47,10 @@
                     <td><?php echo $part['mrp'] ?></td>
                     <td class="edit_area" id="<?php echo $part['id']; ?>"><?php echo ($part['quantity']) ? $part['quantity'] : 0 ?></td>
                     <td>
+                        <?php if($username == 'admin'): ?>
                         <img onclick="window.location='/index.php/part/edit/<?php echo $part['id'] ?>'" 
-                             src="/css/images/edit.png">                        
+                             src="/css/images/edit.png">  
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach ?>

@@ -25,7 +25,7 @@ class VerifyLogin extends CI_Controller {
         
         $data['title'] = 'Login';
    
-        $this->load->view('templates/header', $data);
+        $this->load->view('templates/header_noauth', $data);
         $this->load->view('login_view');
         $this->load->view('templates/footer');
    }

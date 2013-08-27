@@ -21,7 +21,7 @@
         <?php echo form_open('jobsheet/search'); ?>
             <div id="jobsheet-search">
                 <input type="text" name="search" value="<?php echo $keyword; ?>" 
-                       placeholder="Enter Reg. Number or Name"/>
+                       placeholder="Enter Reg. No. / Customer Name / Chassis No."/>
                 <input type="submit" value="Go" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
@@ -52,7 +52,11 @@
                 <?php foreach ($jobsheets as $jobsheet): ?>
                 <?php $alternate = !$alternate; ?>
                 <tr <?php echo ($alternate)?'class="row"':'' ?>>
-                    <td><?php echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['reg_no']) ?></td>
+                    <td>
+                        <a href="/index.php/jobsheet/view/<?= $jobsheet['id'] ?>"><?php 
+                            echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['reg_no']) 
+                        ?></a>
+                    </td>
                     <td><?php echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['name']) ?></td>
                     <td><?php echo $jobsheet['contact'] ?></td>
                     <td><?php echo date('M d, Y', strtotime($jobsheet['created_on'])) ?></td>
@@ -66,7 +70,7 @@
                             'reopen' => 'Reopen'
                         );                        
                         ?>
-                        <select class="jobsheet-status" rel="<?php echo $jobsheet['id'] ?>">
+                        <select class="jobsheet-status" rel="<?= $jobsheet['id'] ?>" data="<?= $jobsheet['delivered_date'] ?>">
                             <?php foreach($statuses as $key => $val): ?>
                                 <option value="<?= $key ?>"
                                     <?php echo ($jobsheet['status'] == $key) ? ' selected' : '' ?>>
@@ -75,9 +79,9 @@
                         </select>
                     </td>
                     <td>
-                        <img onclick="window.location='/index.php/jobsheet/edit/<?php echo $jobsheet['id'] ?>'" src="/css/images/edit.png">
+                        <img rel="<?= $jobsheet['id'] ?>" class="jobsheet-edit-btn" src="/css/images/edit.png">
                         <?php if($username == 'admin'): ?>
-                        <img class="jobsheet-delete-btn" rel="<?php echo $jobsheet['id'] ?>" src="/css/images/delete.png">
+                        <img class="jobsheet-delete-btn" rel="<?= $jobsheet['id'] ?>" src="/css/images/delete.png">
                         <? endif; ?>
                     </td>
                 </tr>

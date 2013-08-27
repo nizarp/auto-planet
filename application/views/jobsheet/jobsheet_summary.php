@@ -61,7 +61,7 @@
         <p>&nbsp;</p>
         <h3>Labour Details:</h3>
         <div height="5px;">&nbsp;</div>
-        <?php if(isset($jobsheet['labour_charges'])) { ?>
+        <?php if(isset($jobsheet['labour_charges']) && count($jobsheet['labour_charges']) > 0) { ?>
             <?php $i = 1; ?>
             
             <div class="summary-sno"><strong>&nbsp;</strong></div> 
@@ -80,13 +80,15 @@
                 </p>
                 <div class="clear"></div>
             <?php } ?>
+        <?php } else { ?>
+            <i>None</i>            
         <?php } ?>
     </div>
     <div id="parts-details">
         <p>&nbsp;</p>
         <h3>Parts Used:</h3>
         <div height="5px;">&nbsp;</div>
-        <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
+        <?php if(isset($jobsheet['jobsheet_parts']) && count($jobsheet['jobsheet_parts']) > 0) { ?>
             <?php $i = 1; ?>
         
             <div class="summary-sno">&nbsp;</div> 
@@ -103,6 +105,8 @@
                 </p>
                 <div class="clear"></div>
             <?php } ?>
+        <?php } else { ?>
+            <i>None</i>
         <?php } ?>
     </div>
     

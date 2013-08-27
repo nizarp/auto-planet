@@ -221,7 +221,7 @@
    		show: 'fadeIn',
 	   	focus: 0,
 	   	useiframe: false,
-	 	top: '15%',
+	 	top: '35%',
 		position: { 
 			container: null, 
 			x: null, 

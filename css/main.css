@@ -245,7 +245,7 @@ tbody td {
     display: inline-block; 
     width: 16px; 
     height:16px; 
-    margin: 0 0 0 10px; 
+    margin: 0 0 0 5px; 
     cursor: pointer; 
     vertical-align: middle; 
 }
@@ -285,12 +285,17 @@ tbody td {
 #jobsheet-form, #expense-form, #wage-form, #staff-form, #part-form{
     padding: 15px;
 }
-#promised_date, #created_on {width: 150px;}
+#promised_date, #created_on, #delivered_date {width: 150px;}
 
 #jobsheet-search { 
     float: right;
     top: 10px;
     padding: 10px 0;
+}
+
+#jobsheet-search input[type="text"] {
+    width: 325px;
+    font-size: 1.1em;
 }
 #jobsheet-list select { width: auto;}
 
@@ -340,6 +345,10 @@ tbody td {
 .summary-part { 
     width: 300px; 
     float: left;
+}
+
+#parts-details p, #labour-details p {
+    margin-left: 10px;
 }
 
 /**** For Autocomplete ****/
