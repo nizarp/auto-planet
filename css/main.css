@@ -389,6 +389,27 @@ tbody td {
     padding: 10px 0;
 }
 
+#expense-search div
+{
+    line-height: 40px;
+    float: left;
+}
+
+.expense-start-date {width: 250px;}
+.expense-date-separator {width: 40px;}
+.expense-end-date {width: 260px;}
+
+.total-rollup {
+    margin-left: auto; 
+    margin-right: auto; 
+    width:98%; 
+    border-top: 2px solid #CCCCCC; 
+    padding-top: 5px;
+    text-align: right; 
+    font-size: 1.1em; 
+    font-weight: bold;
+}
+
 #expense-search input[type="text"] {
     width: 150px;
 }

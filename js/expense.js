@@ -5,9 +5,11 @@ $('document').ready(function() {
         createButton: false
     };
     
-    var promisedDp = $('#expense_search_date').datePicker(datePickerOpts);
+    var startDp = $('#expense_search_start_date').datePicker(datePickerOpts);
+    var endDp = $('#expense_search_end_date').datePicker(datePickerOpts);
     var createdDp = $('#created_on').datePicker(datePickerOpts);
-    $('#expense-search-date-btn').click(function(){ initDatePicker(promisedDp); });
+    $('#expense-search-start-date-btn').click(function(){ initDatePicker(startDp); });
+    $('#expense-search-end-date-btn').click(function(){ initDatePicker(endDp); });
     $('#created-date-btn').click(function(){ initDatePicker(createdDp); });
     
     $('.expense-delete-btn').click(function(){

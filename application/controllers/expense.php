@@ -26,6 +26,7 @@ class Expense extends MY_Controller {
         $limit = 10;
         $data['expenses'] = $this->expense_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
+        $data['total'] = $this->expense_model->getTotal($keyword);
         
         $this->load->library('pagination');
         $config['base_url'] = base_url(). 'index.php/expense/page';
@@ -41,9 +42,18 @@ class Expense extends MY_Controller {
     
     function search()
     {
-        if($this->input->post('search') != '') {
-            $date = $this->input->post('search');
-            $keyword = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+        $startDate = $this->input->post('start_date');
+        $endDate = $this->input->post('end_date');
+
+        if(strtotime(str_replace('/', '-', $startDate)) || strtotime(str_replace('/', '-', $endDate))) {
+            $keyword = "";
+            if(strtotime(str_replace('/', '-', $startDate))) {
+                $keyword.= date('Y-m-d', strtotime(str_replace('/', '-', $startDate)));
+            }
+            $keyword.= '__';
+            if(strtotime(str_replace('/', '-', $endDate))) {
+                $keyword.= date('Y-m-d', strtotime(str_replace('/', '-', $endDate)));
+            }
         } else {
             $keyword = '';
         }        

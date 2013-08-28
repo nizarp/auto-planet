@@ -15,14 +15,28 @@
                 <a href="/index.php/expense/create" class="btn-grn">Create Expense</a>
             </div>
         </div>
+        <?php
+            $dates = explode('__', $keyword);
+            $startDate = (isset($dates[0])) ? $dates[0] : '';
+            $endDate = (isset($dates[1])) ? $dates[1] : '';
+        ?>
         <?php echo form_open('expense/search'); ?>
             <div id="expense-search">
+                <div class="expense-start-date">
                 <strong>Date: </strong>
-                <input type="text" name="search" id="expense_search_date" 
-                       value="<?php echo ($keyword !='') ? date('d/m/Y', strtotime($keyword)) : ''; ?>" 
+                <input type="text" name="start_date" id="expense_search_start_date" 
+                       value="<?php echo ($startDate !='') ? date('d/m/Y', strtotime($startDate)) : ''; ?>" 
                        placeholder="__/ __/ ____"/>
-                <span id="expense-search-date-btn" class="cal-input"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span id="expense-search-start-date-btn" class="cal-input"></span>
+                </div>
+                <div class="expense-date-separator">To</div>
+                <div class="expense-end-date">
+                <input type="text" name="end_date" id="expense_search_end_date" 
+                       value="<?php echo ($endDate !='') ? date('d/m/Y', strtotime($endDate)) : ''; ?>" 
+                       placeholder="__/ __/ ____"/>
+                <span id="expense-search-end-date-btn" class="cal-input"></span>&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Go" id="search_btn" />
+                </div>
             </div>
         <?php echo form_close(); ?>
         <div class="clear"><?php echo $this->pagination->create_links(); ?></div>
@@ -62,4 +76,5 @@
             </tbody>
         </table>
     </div>
+<div class="total-rollup">Total: <?= number_format($total,2) ?></div>
 <div class="spacer"></div>
