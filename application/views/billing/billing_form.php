@@ -14,6 +14,8 @@
     <?php echo form_hidden('jobsheet_id', $jobsheet['id']) ?>
     <div id="billing-form">        
         <div class="error"><?php echo validation_errors(); ?></div>
+        <div id="section-to-print">
+            <div id="print_head">Auto Planet - Bill</div>
         <p><h3>Jobsheet Details:</h3></p>
             <div class="grid_1 alpha">
                 <p>
@@ -32,8 +34,9 @@
                     <label>Chassis No.:</label>
                     <?= $jobsheet['chassis_no'] ?>
                 </p>
-                <p>
+                <div>
                     <label for="payment_mode">Payment Mode:</label>
+                <div id="payment_wrapper">
                     <?php 
                         echo form_dropdown(
                             'payment_mode', 
@@ -42,7 +45,8 @@
                             'id="payment_mode"'
                         );
                     ?>
-                </p>                
+                </div>
+                </div>                
             </div>
             <div class="grid_2 beta">
                 <p>
@@ -118,7 +122,7 @@
                     <div class="bill-charges-desc">&nbsp;</div>
                     <div class="bill-charges-amount">&nbsp;</div>
                     <div class="bill-charges-amount border-top"><strong>Total:</strong></div>
-                    <div class="bill-charges-amount border-top"><?= round($labourTotal, 2) ?></div>
+                    <div class="bill-charges-amount border-top"><?= number_format($labourTotal, 2) ?></div>
                 </div>
                 <input type="hidden" value="<?= $labourTotal ?>" id="labour_total" />
             <?php } ?>
@@ -187,10 +191,11 @@
                     ?>
                 <?php } ?>
                 <div id="bill-labour-item">
-                    <div class="bill-charges-desc">&nbsp;</div>
+                    <div class="bill-parts-item">&nbsp;</div>
+                    <div class="bill-charges-amount">&nbsp;</div>
                     <div class="bill-charges-amount">&nbsp;</div>
                     <div class="bill-charges-amount border-top"><strong>Total:</strong></div>
-                    <div class="bill-charges-amount border-top"><?= round($partsTotal, 2) ?></div>
+                    <div class="bill-charges-amount border-top"><?= number_format($partsTotal, 2) ?></div>
                 </div>
                 <input type="hidden" value="<?= $partsTotal ?>" id="parts_total" />
             <?php } ?>
@@ -209,11 +214,12 @@
             <input type="hidden" name="grand_total" id="grand_total" 
                    value="<?= floor($labourTotal+$partsTotal)?>" />
         </div>
-        
+        </div>        
     </div>        
         
     <div class="nextprev">
-        <input type="submit" value="Save">
+        <input type="button" value="Preview Print" onClick="window.print();">
+        <input type="submit" value="Save &amp; Print" onClick="window.print();">
         <input type="button" onclick="window.location='/index.php/billing'" value="Cancel">
     </div>
 </form>

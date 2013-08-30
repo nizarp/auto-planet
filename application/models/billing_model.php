@@ -81,7 +81,25 @@ Class Billing_model extends MY_Model
     
     function deleteBill($jobsheetId)
     {
-        return $this->db->delete($this->_table, array('jobsheet_id' => $jobsheetId));
+        $this->db->select('id');
+        $this->db->where(array('jobsheet_id' => $jobsheetId));
+        $query = $this->db->get($this->_table);
+        $data = $query->row_array();
+        
+        if(count($data) > 0) {            
+            $billId = $data['id'];
+            $this->db->delete($this->_table, array('id' => $billId));
+            
+            $this->db->delete('bill_charges', array('bill_id' => $billId));
+            $this->db->delete('bill_parts', array('bill_id' => $billId));
+        }     
+    }
+    
+    function delete($id)
+    {
+        $this->db->delete($this->_table, array('id' => $id));
+        $this->db->delete('bill_charges', array('bill_id' => $id));
+        $this->db->delete('bill_parts', array('bill_id' => $id));
     }
     
 }

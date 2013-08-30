@@ -94,6 +94,11 @@ class Billing extends MY_Controller {
         $data['formName'] = "billing/create/$jobsheetId";
         
         $data['jobsheet'] = $jobsheet = $this->jobsheet_model->get($jobsheetId);
+        
+        if($jobsheet['status'] != 'complete') {
+            redirect('billing', 'refresh');
+        }
+        
         $data['paymentModes'] = $this->billing_model->getPaymentModes();
         $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($jobsheetId);
         $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($jobsheetId);
