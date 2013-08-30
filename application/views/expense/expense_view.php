@@ -35,7 +35,7 @@
                        value="<?php echo ($endDate !='') ? date('d/m/Y', strtotime($endDate)) : ''; ?>" 
                        placeholder="__/ __/ ____"/>
                 <span id="expense-search-end-date-btn" class="cal-input"></span>&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Go" id="search_btn" />
+                <input type="submit" value="Search" id="search_btn" />
                 </div>
             </div>
         <?php echo form_close(); ?>

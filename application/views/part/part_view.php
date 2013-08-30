@@ -16,7 +16,7 @@
             <div id="part-search">
                 <input type="text" name="search" value="<?php echo $keyword; ?>" 
                        placeholder="Enter Name or Part ID"/>
-                <input type="submit" value="Go" id="search_btn" />
+                <input type="submit" value="Search" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
         <div class="clear"><?php echo $this->pagination->create_links(); ?></div>

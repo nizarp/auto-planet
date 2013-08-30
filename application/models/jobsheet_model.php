@@ -12,7 +12,8 @@ Class Jobsheet_model extends MY_Model
     function getAll($offset = 0, $limit = 0, $keyword = '') {
         
         if($keyword != '') {
-            $this->db->like('name', $keyword);
+            $this->db->like('id', $keyword);
+            $this->db->or_like('name', $keyword);
             $this->db->or_like('reg_no', $keyword);
             $this->db->or_like('chassis_no', $keyword);
         }
@@ -27,12 +28,24 @@ Class Jobsheet_model extends MY_Model
     function getCount($keyword)
     {
         if($keyword != '') {
-            $this->db->like('name', $keyword);
+            $this->db->like('id', $keyword);
+            $this->db->or_like('name', $keyword);
             $this->db->or_like('reg_no', $keyword);
+            $this->db->or_like('chassis_no', $keyword);
         }
         $this->db->from($this->_table);
         return $this->db->count_all_results();
         
+    }
+    
+    function getAllCompleted()
+    {
+        $this->db->select('id');        
+        $this->db->where(array('status' => 'complete'));
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get($this->_table);
+        
+        return $query->result_array();
     }    
     
     function getLabourCharges($jobsheetId)
@@ -62,6 +75,7 @@ Class Jobsheet_model extends MY_Model
                 'jobsheet_id' => $jobsheetId,
                 'staff' => $labour['staff'],
                 'job_type' => $labour['job_type'],
+                'description' => $labour['description'],
                 'amount' => $labour['amount']
             );
             

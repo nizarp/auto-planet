@@ -110,12 +110,18 @@
                             "labour_charges[$i][staff]",
                             $staffs,
                             $labourCharge['staff']
-                        );            
+                        );
+                    
+                    echo form_input(
+                            "labour_charges[$i][description]",
+                            $labourCharge['description'],
+                            'placeholder="Description" maxlength="100"'
+                        );
                     
                     echo form_input(
                             "labour_charges[$i][amount]",
                             $labourCharge['amount'],
-                            'placeholder="Amount"'
+                            'placeholder="Amount" class="jobsheet-charge-amount"'
                         );
                     $i++;
                     ?>
@@ -177,12 +183,18 @@
         echo form_dropdown(
                 'labour_charges[%count%][staff]',
                 $staffs
-            );            
+            );
+        
+        echo form_input(
+                'labour_charges[%count%][description]',
+                '',
+                'placeholder="Description" maxlength="100"'
+            );
 
         echo form_input(
                 'labour_charges[%count%][amount]',
                 '',
-                'placeholder="Amount"'
+                'placeholder="Amount" class="jobsheet-charge-amount"'
             );
         ?>
         <img class="item-delete-btn" onClick="$(this).parent().remove();" src="/css/images/x.gif">

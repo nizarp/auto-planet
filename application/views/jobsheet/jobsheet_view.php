@@ -21,25 +21,26 @@
         <?php echo form_open('jobsheet/search'); ?>
             <div id="jobsheet-search">
                 <input type="text" name="search" value="<?php echo $keyword; ?>" 
-                       placeholder="Enter Reg. No. / Customer Name / Chassis No."/>
-                <input type="submit" value="Go" id="search_btn" />
+                       title="Enter Jobsheet No./ Reg. No./ Customer Name/ Chassis No."
+                       placeholder="Enter Keyword"/>
+                <input type="submit" value="Search" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
         <div class="clear"><?php echo $this->pagination->create_links(); ?></div>
         <table id="jobsheet-list" class="grid-list">
             <colgroup>
+                <col width="15%"/>
                 <col width="13%"/>
-                <col width="23%"/>
-                <col width="17%"/>
+                <col width="25%"/>                
                 <col width="13%"/>
                 <col width="14%"/>
                 <col width="12%"/>
                 <col width="8%"/>
             </colgroup>
             <thead>
+                <th>Jobsheet No.</th>
                 <th>Reg. No.</th>
-                <th>Customer Name</th>
-                <th>Contact</th>
+                <th>Customer Name</th>                
                 <th>Booked Date</th>
                 <th>Promised Date</th>
                 <th>Status</th>
@@ -53,12 +54,18 @@
                 <?php $alternate = !$alternate; ?>
                 <tr <?php echo ($alternate)?'class="row"':'' ?>>
                     <td>
-                        <a href="/index.php/jobsheet/view/<?= $jobsheet['id'] ?>"><?php 
-                            echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['reg_no']) 
-                        ?></a>
+                        <a href="/index.php/jobsheet/view/<?= $jobsheet['id'] ?>">
+                            <?php 
+                            echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['id']) 
+                            ?>
+                        </a>
                     </td>
-                    <td><?php echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['name']) ?></td>
-                    <td><?php echo $jobsheet['contact'] ?></td>
+                    <td>
+                        <?php 
+                        echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['reg_no']) 
+                        ?>
+                    </td>
+                    <td><?php echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['name']) ?></td>                    
                     <td><?php echo date('M d, Y', strtotime($jobsheet['created_on'])) ?></td>
                     <td><?php echo date('M d, Y', strtotime($jobsheet['promised_date'])) ?></td>
                     <td>

@@ -207,7 +207,7 @@ class Jobsheet extends MY_Controller {
                     : NULL,
                 "estimated_amount" => 
                     round($this->input->post('estimated_amount'),2),
-                "status" => $this->input->post('status'),
+                "status" => 'open',
                 "notes" => $this->input->post('notes')
             );
             
@@ -238,6 +238,7 @@ class Jobsheet extends MY_Controller {
         
         $this->load->model('staff_model');
         $this->load->model('part_model');
+        $this->load->helper('text');
         
         $data['title'] = 'Jobsheet Summary';
         $data['tab'] = 'Jobsheet';        

@@ -149,7 +149,7 @@ tbody td {
 	font-size: 1.1em;
     font-weight: bold;
     text-decoration: none;
-	border: none;
+	border:1px solid #7d99ca; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
     color: #fff; 
 	
     -moz-border-radius: 16px; 
@@ -229,13 +229,40 @@ tbody td {
 
 .highlight { background: none repeat scroll 0 0 #FFFFCC; }
 
-#search_btn { 
-    background: none repeat scroll 0 0 blue;
+#search_btn, #create-bill-btn { 
+    border:1px solid #25729a; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size:12px;
+    font-family:arial, helvetica, sans-serif; 
+    padding: 5px; 
+    text-decoration:none; 
+    display:inline-block;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    font-weight:bold; 
     color: #FFFFFF;
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 3px 8px;
-    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.75); 
+    cursor: pointer;
+    background-color: #3093c7; 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3093c7), to(#1c5a85));
+    background-image: -webkit-linear-gradient(top, #3093c7, #1c5a85);
+    background-image: -moz-linear-gradient(top, #3093c7, #1c5a85);
+    background-image: -ms-linear-gradient(top, #3093c7, #1c5a85);
+    background-image: -o-linear-gradient(top, #3093c7, #1c5a85);
+    background-image: linear-gradient(to bottom, #3093c7, #1c5a85);
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#3093c7, endColorstr=#1c5a85);
+}
+
+#search_btn:hover, #create-bill-btn:hover{
+    border:1px solid #1c5675;
+    background-color: #26759e; 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#26759e), to(#133d5b));
+    background-image: -webkit-linear-gradient(top, #26759e, #133d5b);
+    background-image: -moz-linear-gradient(top, #26759e, #133d5b);
+    background-image: -ms-linear-gradient(top, #26759e, #133d5b);
+    background-image: -o-linear-gradient(top, #26759e, #133d5b);
+    background-image: linear-gradient(to bottom, #26759e, #133d5b);
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#26759e, endColorstr=#133d5b);
 }
 
 .spacer { height: 20px; }
@@ -309,15 +336,13 @@ tbody td {
     margin-bottom: 0;
 }
 
-#labour-details input[type="text"], select {
-    width: 100px;
-    margin-right: 5px;
+#labour-details select, input[type="text"] {
+    margin-right: 7px;
     font-size: 1.1em;
 }
 
-#labour-details select {
-    width: 175px;
-}
+#labour-details select { width: auto; }
+#labour-details .jobsheet-charge-amount { width: 100px; }
 
 #parts-details input[type="text"] {
     width: 75px;
@@ -331,11 +356,15 @@ tbody td {
     float: left;
 }
 .summary-jobtype { 
-    width: 150px; 
+    width: 110px; 
     float: left;
 }
 .summary-staff { 
-    width: 200px; 
+    width: 130px; 
+    float: left;
+}
+.summary-desc { 
+    width: 390px; 
     float: left;
 }
 .summary-amount { 
@@ -397,7 +426,7 @@ tbody td {
 
 .expense-start-date {width: 250px;}
 .expense-date-separator {width: 40px;}
-.expense-end-date {width: 260px;}
+.expense-end-date {width: 280px;}
 
 .total-rollup {
     margin-left: auto; 
@@ -445,4 +474,22 @@ div.jqi button {
     margin: 0 10px !important;
     padding: 3px 10px !important;
     font-weight: normal !important;
+}
+
+/**** Billing ****/
+#billing-search { 
+    float: right;
+    top: 10px;
+    padding: 10px 0;
+}
+
+#billing-search input[type="text"] {
+    width: 325px;
+    font-size: 1.1em;
+}
+
+#create-bill {padding: 10px;}
+#create-bill select {
+    width: auto;
+    font-size: 12px
 }

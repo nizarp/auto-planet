@@ -67,6 +67,7 @@
             <div class="summary-sno"><strong>&nbsp;</strong></div> 
             <div class="summary-jobtype"><strong>Jot Type</strong></div>
             <div class="summary-staff"><strong>Staff</strong></div>
+            <div class="summary-desc"><strong>Description</strong></div>
             <div class="summary-amount"><strong>Amount</strong></div>
             <div class="clear"></div>
         
@@ -75,6 +76,9 @@
                     <div class="summary-sno"><?= $i ?>.</div> 
                     <div class="summary-jobtype"><?= $jobtypes[$labourCharge['job_type']] ?></div>
                     <div class="summary-staff"><?= $staffs[$labourCharge['staff']] ?></div>
+                    <div class="summary-desc" title="<?= $labourCharge['description'] ?>">
+                        <?= character_limiter($labourCharge['description'],60) ?>
+                    </div>
                     <div class="summary-amount"><?= number_format($labourCharge['amount'], 2) ?></div>
                     <? $i++; ?>
                 </p>

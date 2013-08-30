@@ -51,3 +51,5 @@ $route['wage/page/(:any)'] = 'wage/index/$1';
 $route['wage/page'] = 'wage/index/1';
 $route['part/page/(:any)'] = 'part/index/$1';
 $route['part/page'] = 'part/index/1';
+$route['billing/page/(:any)'] = 'billing/index/$1';
+$route['billing/page'] = 'billing/index/1';

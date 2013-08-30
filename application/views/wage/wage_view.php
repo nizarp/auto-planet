@@ -25,7 +25,7 @@
                         'id="staff-dropdown"'
                     ); 
                 ?>
-                &nbsp;<input type="submit" value="Go" id="search_btn" />
+                &nbsp;<input type="submit" value="Search" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
         <div class="clear"><?php echo $this->pagination->create_links(); ?></div>
