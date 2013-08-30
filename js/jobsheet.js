@@ -50,12 +50,17 @@ $('document').ready(function() {
                 $.prompt('Please enter Delivery date in the Jobsheet to proceed');
                 $(this).val(previous);
             } else {
-                if($(this).val() == 'close' && previous != 'complete') {
-                    $.prompt('Only completed jobsheets can be closed. \n\
-                                Please complete the jobsheet and try again.');
+                if($(this).attr('items') == 0) {
+                    $.prompt('Please enter Labour / Parts details to proceed');
                     $(this).val(previous);
+                } else {
+                    if($(this).val() == 'close' && previous != 'complete') {
+                        $.prompt('Only completed jobsheets can be closed. \n\
+                                    Please complete the jobsheet and try again.');
+                        $(this).val(previous);
+                    }
+                    changeStatus($(this).attr('rel'), $(this).val());
                 }
-                changeStatus($(this).attr('rel'), $(this).val());
             }
         }
     });

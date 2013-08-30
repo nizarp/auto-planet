@@ -9,8 +9,7 @@ Class Jobsheet_model extends MY_Model
     
     public $_table = 'jobsheets';
 
-    function getAll($offset = 0, $limit = 0, $keyword = '') {
-        
+    function getAll($offset = 0, $limit = 0, $keyword = '') {        
         if($keyword != '') {
             $this->db->like('id', $keyword);
             $this->db->or_like('name', $keyword);

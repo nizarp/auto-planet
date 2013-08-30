@@ -25,7 +25,12 @@ class Jobsheet extends MY_Controller {
         $data['tab'] = 'Jobsheet';
         
         $limit = 10;
-        $data['jobsheets'] = $this->jobsheet_model->getAll(($offset-1)*$limit, $limit, $keyword);
+        $jobsheets = $this->jobsheet_model->getAll(($offset-1)*$limit, $limit, $keyword);
+        foreach($jobsheets as $key => $jobsheet) {
+            $jobsheets[$key]['labour_count'] = count($this->jobsheet_model->getLabourCharges($jobsheet['id']));
+            $jobsheets[$key]['parts_count'] = count($this->jobsheet_model->getJobsheetParts($jobsheet['id']));
+        }        
+        $data['jobsheets'] = $jobsheets;
         $data['keyword'] = $keyword;
         
         $this->load->library('pagination');

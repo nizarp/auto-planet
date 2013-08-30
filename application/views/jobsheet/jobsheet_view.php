@@ -77,7 +77,10 @@
                             'reopen' => 'Reopen'
                         );                        
                         ?>
-                        <select class="jobsheet-status" rel="<?= $jobsheet['id'] ?>" data="<?= $jobsheet['delivered_date'] ?>">
+                        <select class="jobsheet-status" 
+                                rel="<?= $jobsheet['id'] ?>" 
+                                items="<?php echo $jobsheet['labour_count']+$jobsheet['parts_count']; ?>"
+                                data="<?= $jobsheet['delivered_date'] ?>">
                             <?php foreach($statuses as $key => $val): ?>
                                 <option value="<?= $key ?>"
                                     <?php echo ($jobsheet['status'] == $key) ? ' selected' : '' ?>>
