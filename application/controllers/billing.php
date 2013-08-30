@@ -73,8 +73,114 @@ class Billing extends MY_Controller {
     
     function update($id)
     {
+        $userData = parent::requireLogin();
+        
         $data = $this->input->post('data');        
         $this->billing_model->update($id, $data);
+    }
+    
+    function create($jobsheetId)
+    {
+        $userData = parent::requireLogin();
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');     
+        $this->load->model('jobsheet_model');
+        $this->load->model('part_model');
+        
+        $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
+        $data['title'] = 'Create Bill';
+        $data['tab'] = 'Billing';
+        $data['formName'] = "billing/create/$jobsheetId";
+        
+        $data['jobsheet'] = $jobsheet = $this->jobsheet_model->get($jobsheetId);
+        $data['paymentModes'] = $this->billing_model->getPaymentModes();
+        $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($jobsheetId);
+        $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($jobsheetId);
+        $data['labourTax'] = 0.1236;
+        $data['partsTax'] = 0.145;
+        
+        $jobtypes = $this->jobsheet_model->getAllJobtypes();
+        foreach($jobtypes as $jobtype) {
+            $jobtypeList[$jobtype['id']] = $jobtype['type'];            
+        }
+        $data['jobtypes'] = $jobtypeList;
+        
+        $parts = $this->part_model->getAll();
+        foreach($parts as $part) {
+            $partsList[$part['id']] = $part;
+        }
+        $data['parts'] = $partsList;
+        
+        
+        $data['bill'] = array(
+            'payment_mode' => ''
+        );
+        
+        if (!isset($_POST['jobsheet_id']))
+		{
+			$this->load->view('templates/header', $data);
+            $this->load->view('billing/billing_form', $data);
+            $this->load->view('templates/footer');
+            
+		} else {
+            
+            $data = array(
+                'jobsheet_id' => $this->input->post('jobsheet_id'),
+                'name' => $jobsheet['name'],
+                'bill_date' => $this->input->post('bill_date'),
+                'billing_address' => $jobsheet['address'],
+                'billing_contact' => $jobsheet['contact'],
+                'payment_mode' => $this->input->post('payment_mode'),
+                'reg_no' => $jobsheet['reg_no'],
+                'chassis_no' => $jobsheet['chassis_no'],
+                'round_off' => $this->input->post('round_off'),
+                'grand_total' => $this->input->post('grand_total')
+            );
+            
+            $this->billing_model->deleteBill($jobsheetId);
+            
+            $this->billing_model->create($data);            
+            $billingId = $this->db->insert_id();
+            
+            if($billingId) {
+                
+                // Labour Changes
+                $billCharges = $this->input->post('bill_charges');
+                foreach($billCharges as $billCharge) {
+                    $data = array(
+                        'bill_id' => $billingId,
+                        'job_description' => $billCharge['description'],
+                        'amount' => $billCharge['amount'],
+                        'tax' => $billCharge['tax'],
+                        'total' => $billCharge['total']
+                    );
+                    
+                    $this->billing_model->insertBillCharge($data);                    
+                }
+                
+                // Parts
+                $billParts = $this->input->post('bill_parts');
+                foreach($billParts as $billPart) {
+                    $data = array(
+                        'bill_id' => $billingId,
+                        'part_name' => $billPart['part_name'],
+                        'rate' => $billPart['rate'],
+                        'tax' => $billPart['tax'],
+                        'quantity' => $billPart['quantity'],
+                        'total' => $billPart['total']
+                    );
+                    
+                    $this->billing_model->insertBillParts($data);                    
+                }
+                
+                $status = array('status' => 'close');
+                $this->jobsheet_model->update($jobsheetId, $status);
+            }
+            
+            redirect('billing', 'refresh');
+            
+        }
     }
     
 }

@@ -214,7 +214,7 @@ class Jobsheet extends MY_Controller {
             $this->jobsheet_model->create($data);
             $jobsheetId = $this->db->insert_id();
             
-            if($jobsheetId) {                
+            if($jobsheetId) {
                 // Update Labour charges
                 if(!empty($labourInput)) {
                     $this->jobsheet_model->updateJobsheetCharges($jobsheetId, $labourInput);

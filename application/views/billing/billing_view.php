@@ -51,14 +51,13 @@
                 <?php foreach ($bills as $bill): ?>
                 <?php $alternate = !$alternate; ?>
                 <tr <?php echo ($alternate)?'class="row"':'' ?>>
+                    <td><?php echo $bill['id'] ?></td>
                     <td><?php echo $bill['jobsheet_id'] ?></td>
                     <td><?php echo $bill['reg_no'] ?></td>
                     <td><?php echo $bill['name'] ?></td>
                     <td><?php echo $bill['grand_total'] ?></td>
                     <td><?php echo date('M d, Y', strtotime($bill['bill_date'])) ?></td>
-                    <td>
-                        <img onclick="window.location='/index.php/billing/edit/<?php echo $bill['id'] ?>'" 
-                             src="/css/images/edit.png">
+                    <td>                        
                         <?php if($username == 'admin'): ?>
                         <img class="bill-delete-btn" rel="<?php echo $bill['id'] ?>" 
                              src="/css/images/delete.png">

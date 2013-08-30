@@ -56,6 +56,33 @@ Class Billing_model extends MY_Model
         
     }
     
+    function getPaymentModes()
+    {
+        $query = $this->db->get('payment_modes');
+        $data = $query->result_array();
+        
+        $modes = array();
+        foreach($data as $mode) {
+            $modes[$mode['id']] = $mode['mode'];
+        }
+        
+        return $modes;
+    }
+    
+    function insertBillCharge($data)
+    {
+        return $this->db->insert('bill_charges', $data);
+    }
+    
+    function insertBillParts($data)
+    {
+        $this->db->insert('bill_parts', $data);
+    }
+    
+    function deleteBill($jobsheetId)
+    {
+        return $this->db->delete($this->_table, array('jobsheet_id' => $jobsheetId));
+    }
     
 }
 ?>

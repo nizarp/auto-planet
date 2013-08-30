@@ -309,7 +309,7 @@ tbody td {
 .jobsheet-edit-btn, .jobsheet-delete-btn {
     cursor: pointer;
 }
-#jobsheet-form, #expense-form, #wage-form, #staff-form, #part-form{
+#jobsheet-form, #expense-form, #wage-form, #staff-form, #part-form, #billing-form{
     padding: 15px;
 }
 #promised_date, #created_on, #delivered_date {width: 150px;}
@@ -492,4 +492,48 @@ div.jqi button {
 #create-bill select {
     width: auto;
     font-size: 12px
+}
+#payment_mode { 
+    width: 150px; 
+    font-size: 12px;
+}
+#bill-labour-details .bill-charges-desc {
+    width: 500px;
+    float: left;
+    padding: 3px;
+}
+#bill-labour-details .bill-charges-amount {
+    float:left;
+    width: 100px;
+    padding: 3px;
+    text-align: right;
+}
+#bill-labour-item {
+    display: inline-block;
+}
+.border-top {
+    margin-top: 3px;
+    border-top: 1px solid #CCCCCC;
+}
+.border-bottom {
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 3px;
+}
+.address-div {width: 250px;}
+#bill-labour-details .bill-parts-item {
+    width: 400px;
+    float: left;
+    padding: 3px;
+}
+
+.grand-total {
+    font-size: 14px;
+    color: #00F;
+    font-weight: bold;
+    margin-top: 20px;
+    float:right;
+}
+#round_off {
+    width:150px;
+    margin: 10px 0px;
 }

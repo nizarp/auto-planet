@@ -12,7 +12,7 @@
             <div class="grid_1 alpha">
                 <p>
                     <label for="name">Name:<span class="red">*</span></label>
-                    <input type="text" id="name" name="name"
+                    <input type="text" id="name" name="name" maxlength="60"
                            value="<?= set_value('name', $part['name']) ?>"/>
                 </p>
                 <p>
