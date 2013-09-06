@@ -592,6 +592,12 @@ div.jqi button {
     margin-bottom: 30px;
 }
 
+#bill-labour-details, #bill-parts-details {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+  }
+
 @media print {
   body * {
     visibility: hidden;
@@ -599,18 +605,12 @@ div.jqi button {
   #section-to-print, #section-to-print * {
     visibility: visible;
     font-size: 12px;
-  }
-  
-  #bill-labour-details, #bill-parts-details {
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-  }
+  }  
   
   #payment_mode {
       border:none;
       margin-top: -8px;
-      margin-left: -9px;
+      margin-left: -8px;
   }
   
   #round_off { border: none; }
@@ -621,7 +621,7 @@ div.jqi button {
       font-size: 20px;
   }
   #payment_wrapper {
-      width:120px;
+      width:110px;
       overflow: hidden;
   }
   #section-to-print {
