@@ -57,7 +57,7 @@ input[type="text"], input[type="password"], textarea, select {
 .page-header ul {
 	position: absolute;
 	top: 2px;
-	left: 490px;
+	right: 0px;
 	background: none;
 	margin: 0;
 	padding: 0;
@@ -458,7 +458,37 @@ tbody td {
 #staff-dropdown { width: 160px; }
 #wage-form #amount { width: 150px; }
 #wage-form #description { width: 350px; }
-
+.month-head {
+    clear:both;
+    padding-left: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.rollup-spacer {
+    height: 30px;
+}
+.wage-total {
+    color: #0000FF;
+    font-size: 13px;
+    font-weight: bold;
+}
+.rollup {
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid #CCC;
+    display: none;
+    margin: 20px auto 30px;
+    text-align: center;
+    width: 90%;
+    display: inline-block;
+    clear: both;
+}
+#wage-search {margin-bottom: 10px;}
+.rollup div {
+    display: inline-block;
+    margin: 5px;
+    text-align: center;
+    width: 130px;
+}
 .ui-button-icon-only {
     height: 23px !important;
     bottom: 1px !important;
@@ -585,3 +615,7 @@ div.jqi button {
         margin: 0mm;  /* this affects the margin in the printer settings */
     }
 }
+
+/**** Staff ****/
+#salary {width: 150px;}
+#staff_role {width: 160px;}

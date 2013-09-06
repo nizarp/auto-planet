@@ -29,7 +29,9 @@ class Billing extends MY_Controller {
         $data['title'] = 'Billing - Auto Planet';
         $data['tab'] = 'Billing';
         
-        $limit = 10;
+        $this->config->load('ap_settings');
+        $limit = $this->config->item('records_per_page');
+        
         $data['bills'] = $this->billing_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
         $data['total'] = $this->billing_model->getTotal($keyword);

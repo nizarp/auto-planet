@@ -48,5 +48,17 @@ Class Staff_model extends MY_Model
         return $query->result_array();
     }
     
+    function getSalary($staff)
+    {
+        $id = (int) $staff;
+        $query = $this->db
+                ->select('salary')
+                ->from($this->_table)
+                ->where('id', $id)
+                ->get();
+        $data = $query->row_array();
+        return $data['salary'];
+    }
+    
 }
 ?>

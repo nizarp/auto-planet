@@ -59,7 +59,12 @@ $config = array(
               'field'   => 'email', 
               'label'   => 'Email', 
               'rules'   => 'valid_email'
-           )
+           ),
+        array(
+              'field'   => 'salary', 
+              'label'   => 'Salary', 
+              'rules'   => 'numeric'
+           )        
     ),
     'wage_form' => array(
         array(

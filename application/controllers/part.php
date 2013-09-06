@@ -25,7 +25,10 @@ class Part extends MY_Controller {
         
         $data['title'] = 'Parts';
         $data['tab'] = 'Part';
-        $limit = 10;
+        
+        $this->config->load('ap_settings');
+        $limit = $this->config->item('records_per_page');
+        
         $data['parts'] = $this->part_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
         

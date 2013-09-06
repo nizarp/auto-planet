@@ -24,7 +24,9 @@ class Jobsheet extends MY_Controller {
         $data['title'] = 'Jobsheet';
         $data['tab'] = 'Jobsheet';
         
-        $limit = 10;
+        $this->config->load('ap_settings');
+        $limit = $this->config->item('records_per_page');
+        
         $jobsheets = $this->jobsheet_model->getAll(($offset-1)*$limit, $limit, $keyword);
         foreach($jobsheets as $key => $jobsheet) {
             $jobsheets[$key]['labour_count'] = count($this->jobsheet_model->getLabourCharges($jobsheet['id']));

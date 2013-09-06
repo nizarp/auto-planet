@@ -19,34 +19,57 @@ class Wage extends MY_Controller {
         $data['username'] = $userData['username'];
         
         $this->load->helper('text');
+        $this->load->helper('array');
         $this->load->library('pagination');
         $this->load->model('staff_model');
         $this->load->helper('form');
         
         $offset = $this->uri->segment(3, 1);
         $keyword = $this->input->get('search');
+        $data['keyword'] = $keyword;
         
         $data['title'] = 'Wage';
         $data['tab'] = 'Wage';
-        $limit = 10;
-        $data['wages'] = $this->wage_model->getAll(($offset-1)*$limit, $limit, $keyword);
-        $data['keyword'] = $keyword;
         
         $staffList = array('' => 'All');
         $staffs = $this->staff_model->getAll();
         foreach($staffs as $staff) {
             $staffList[$staff['id']] = $staff['name'];            
         }
-        $data['staffs'] = $staffList;
+        $data['staffs'] = $staffList;        
         
-        $config['base_url'] = base_url(). 'index.php/wage/page';
-        $config['total_rows'] = $this->wage_model->getCount($keyword);
-        $config['per_page'] = $limit;        
-        $this->pagination->initialize($config);
+        if($keyword != '') {
+            
+            $thisMonth = date('Ym');
+            $lastMonth = date('Ym', strtotime('last month'));
+            
+            $data['this_month_wages'] = $this->wage_model->getAllForMonth($keyword, $thisMonth);
+            $data['thisMonthTotal'] = array_sum_by_key($data['this_month_wages'], 'amount');            
+            $data['last_month_wages'] = $this->wage_model->getAllForMonth($keyword, $lastMonth);        
+            $data['lastMonthTotal'] = array_sum_by_key($data['last_month_wages'], 'amount');
+            
+            $data['salary'] = $this->staff_model->getSalary($keyword);
+            
+            $this->load->view('templates/header', $data);
+            $this->load->view('wage/staff_wage_view', $data);
+            $this->load->view('templates/footer');            
+            
+        } else {
+            $this->config->load('ap_settings');
+            $limit = $this->config->item('records_per_page');
+            
+            $data['wages'] = $this->wage_model->getAll(($offset-1)*$limit, $limit);            
+
+            $config['base_url'] = base_url(). 'index.php/wage/page';
+            $config['total_rows'] = $this->wage_model->getCount($keyword);
+            $config['per_page'] = $limit;        
+            $this->pagination->initialize($config);
+            
+            $this->load->view('templates/header', $data);
+            $this->load->view('wage/wage_view', $data);
+            $this->load->view('templates/footer');
+        }        
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('wage/wage_view', $data);
-        $this->load->view('templates/footer');
     }
     
     function search()

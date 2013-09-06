@@ -11,6 +11,12 @@ class Staff extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('staff_model');
+        
+        $userData = parent::requireLogin();        
+        if($userData['username'] != 'admin') {
+            redirect('/jobsheet/');
+        }
+        
     }
 
     function index()
@@ -23,7 +29,10 @@ class Staff extends MY_Controller {
         
         $data['title'] = 'Staff';
         $data['tab'] = 'Staff';
-        $limit = 10;
+        
+        $this->config->load('ap_settings');
+        $limit = $this->config->item('records_per_page');
+        
         $data['staffs'] = $this->staff_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
         
@@ -83,10 +92,14 @@ class Staff extends MY_Controller {
             "address" => '',
             "contact" => '',
             "email" => '',
-            "notes" => ''
+            "notes" => '',
+            "salary" => ''
         );
         
         $data['roles'] = $this->staff_model->getAllRoles();
+        
+        $this->form_validation->set_message('alpha_space', 
+                'The %s field may only contain alphabetic and space characters.');
         
         if ($this->form_validation->run('staff_form') == FALSE)
 		{
@@ -102,6 +115,7 @@ class Staff extends MY_Controller {
                 "contact" => $this->input->post('contact'),
                 "email" => $this->input->post('email'),
                 "notes" => $this->input->post('notes'),
+                "salary" => $this->input->post('salary'),
                 "created_on" => date('Y-m-d')
             );
             
@@ -141,7 +155,8 @@ class Staff extends MY_Controller {
                 "address" => $this->input->post('address'),
                 "contact" => $this->input->post('contact'),
                 "email" => $this->input->post('email'),
-                "notes" => $this->input->post('notes')
+                "notes" => $this->input->post('notes'),
+                "salary" => $this->input->post('salary')
             );
             
             $this->staff_model->update($id, $data);

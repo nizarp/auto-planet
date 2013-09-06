@@ -26,9 +26,18 @@
                            value="<?= set_value('email', $staff['email']) ?>"/>
                 </p>
                 <p>
+                    <label for="salary">Salary:</label>
+                    <?php echo form_input('salary', set_value('salary', $staff['salary']), 'id="salary"') ?>
+                </p>
+                <p>
                     <label for="role">Role:<span class="red">*</span></label>
                     <?php 
-                        echo form_dropdown('role', $roles, (isset($_POST['role']) ? $_POST['role'] : $staff['role'])); 
+                        echo form_dropdown(
+                                'role', 
+                                $roles, 
+                                (isset($_POST['role']) ? $_POST['role'] : $staff['role']),
+                                'id="staff_role"'
+                            ); 
                     ?>
                 </p>
                 

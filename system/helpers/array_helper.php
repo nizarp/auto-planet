@@ -115,5 +115,28 @@ if ( ! function_exists('elements'))
 	}
 }
 
+/**
+ * Array Sum By Key - Calculates sum of all values by key
+ *
+ * @access	public
+ * @param	array
+ * @param   string  $key    Key to be added
+ * @return	mixed	Sum of values
+ */
+if ( ! function_exists('array_sum_by_key'))
+{
+	function array_sum_by_key($array, $key)
+    {
+        $sum = 0;
+        foreach($array as $el){
+            if(isset($el[$key])) {
+                $sum+= (float)$el[$key];
+            }
+        }
+
+        return $sum;
+    }
+}
+
 /* End of file array_helper.php */
 /* Location: ./system/helpers/array_helper.php */

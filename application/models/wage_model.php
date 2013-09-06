@@ -30,7 +30,17 @@ Class Wage_model extends MY_Model
         $this->db->from($this->_table);
         return $this->db->count_all_results();
         
-    }    
+    }
+    
+    function getAllForMonth($staff, $month)
+    {
+        $query = $this->db
+                ->from($this->_table)
+                ->where('staff', $staff)
+                ->where('EXTRACT(YEAR_MONTH FROM created_on) = ', $month)
+                ->get();
+        return $query->result_array();
+    }
     
 }
 ?>

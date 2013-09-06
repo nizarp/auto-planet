@@ -23,7 +23,10 @@ class Expense extends MY_Controller {
         
         $data['title'] = 'Expense';
         $data['tab'] = 'Expense';
-        $limit = 10;
+        
+        $this->config->load('ap_settings');
+        $limit = $this->config->item('records_per_page');
+        
         $data['expenses'] = $this->expense_model->getAll(($offset-1)*$limit, $limit, $keyword);
         $data['keyword'] = $keyword;
         $data['total'] = $this->expense_model->getTotal($keyword);
