@@ -16,7 +16,8 @@
         <div class="error"><?php echo validation_errors(); ?></div>
         <div id="section-to-print">
             <div id="print_head">Auto Planet - Bill</div>
-        <p><h3>Jobsheet Details:</h3></p>
+            <p><h3>Jobsheet Details:</h3></p>
+            <div id="bill-details">        
             <div class="grid_1 alpha">
                 <p>
                     <label>Jobsheet No.:</label>
@@ -63,14 +64,17 @@
                     <div class="address-div"><?= nl2br($jobsheet['address']) ?></div>
                 </p>
             </div>
+            </div>
         <div class="clear"></div>    
         
-        <div id="bill-labour-details">
-            <p></p>
-            <h3>Labour Details:</h3>
+        <p><h3>Labour Details:</h3></p>
+        <div id="bill-labour-details">            
             <?php if(isset($jobsheet['labour_charges'])) { ?>
-                <?php $i = 1; ?>
-                <?php $labourTotal = 0; ?>
+                <?php 
+                    $i = 1; 
+                    $labourTotal = 0;
+                    $taxTotal = 0;
+                ?>
                 <div id="bill-labour-item">
                     <div class="bill-charges-desc border-bottom"><strong>Job Description</strong></div>
                     <div class="bill-charges-amount border-bottom"><strong>Charge</strong></div>
@@ -84,12 +88,20 @@
                         <div class="bill-charges-desc">
                             <?php echo $jobtypes[$labourCharge['job_type']]. ' - '. $labourCharge['description'] ?>
                         </div>
-                        <div class="bill-charges-amount"><?= $labourCharge['amount'] ?></div>
+                        <div class="bill-charges-amount"><?= number_format($labourCharge['amount'],2) ?></div>
                         <div class="bill-charges-amount">
-                            <?= round($labourCharge['amount']*$labourTax, 2) ?>
+                            <?= number_format(round($labourCharge['amount']*$labourTax, 2),2) ?>
                         </div>
                         <div class="bill-charges-amount">
-                            <?= round(($labourCharge['amount']*$labourTax) + $labourCharge['amount'], 2) ?>
+                            <?php 
+                                echo number_format(
+                                    round(
+                                        ($labourCharge['amount']*$labourTax) + $labourCharge['amount'], 
+                                         2
+                                    ), 
+                                    2
+                                ); 
+                            ?>
                         </div>
                     </div>
                     <? 
@@ -116,6 +128,7 @@
 
                     $i++;
                     $labourTotal+= $total;
+                    $taxTotal+= round($labourCharge['amount']*$labourTax, 2);
                     ?>
                 <?php } ?>
                 <div id="bill-labour-item">
@@ -128,9 +141,8 @@
             <?php } ?>
         </div>
         
-        <div id="bill-labour-details">
-            <p></p>
-            <h3>Parts Description:</h3>
+        <p><h3>Parts Description:</h3></p>
+        <div id="bill-parts-details">            
             <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
                 <?php $i = 1; ?>
                 <?php $partsTotal = 0; ?>
@@ -146,15 +158,25 @@
                 <?php foreach ($jobsheet['jobsheet_parts'] as $jobsheetPart) { ?>
                     <div id="bill-labour-item">
                         <div class="bill-parts-item"><?= $parts[$jobsheetPart['part_id']]['name'] ?></div>
-                        <div class="bill-charges-amount"><?= $parts[$jobsheetPart['part_id']]['mrp'] ?></div>
                         <div class="bill-charges-amount">
-                            <?= round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax, 2) ?>
+                            <?= number_format($parts[$jobsheetPart['part_id']]['mrp'],2) ?>
+                        </div>
+                        <div class="bill-charges-amount">
+                            <?= number_format(round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax, 2), 2) ?>
                         </div>
                         <div class="bill-charges-amount"><?= $jobsheetPart['qty'] ?></div>
                         <div class="bill-charges-amount">
                             <?php
-                            echo round((($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax) 
-                                    + $parts[$jobsheetPart['part_id']]['mrp']) * $jobsheetPart['qty'], 2);
+                            echo number_format(
+                                round(
+                                    (
+                                        ($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax) 
+                                        + $parts[$jobsheetPart['part_id']]['mrp']
+                                    ) * $jobsheetPart['qty'],
+                                    2
+                                ), 
+                                2
+                            );
                             ?>
                         </div>
                     </div>
@@ -203,7 +225,13 @@
         
         <div>
             <strong>Round Off: </strong>
-            <?php echo form_input('round_off','','id="round_off"') ?>
+            <?php 
+                echo form_input(
+                    'round_off',
+                    ceil($taxTotal),
+                    'id="round_off" placeholder="'.ceil($taxTotal).'"'
+                ); 
+            ?>
         </div>
         <div class="clear"></div>
         

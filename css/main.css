@@ -513,6 +513,14 @@ div.jqi button {
     padding: 10px 0;
 }
 
+#billing-form label { color: #464646 }
+#billing-form .grid_2 { width:350px; }
+#billing-form .grid_1 { width:500px; }
+#billing-form h3 { 
+    margin-top: 25px; 
+    font-size: 12px;
+}
+
 #billing-search input[type="text"] {
     width: 325px;
     font-size: 1.1em;
@@ -526,18 +534,25 @@ div.jqi button {
 #payment_mode { 
     width: 150px; 
     font-size: 12px;
+    color: #464646
 }
 #bill-labour-details .bill-charges-desc {
-    width: 500px;
+    width: 550px;
     float: left;
     padding: 3px;
 }
-#bill-labour-details .bill-charges-amount {
+#bill-labour-details .bill-charges-amount, #bill-parts-details .bill-charges-amount {
     float:left;
     width: 100px;
     padding: 3px;
     text-align: right;
 }
+#bill-parts-details .bill-parts-item {
+    width: 450px;
+    float: left;
+    padding: 3px;
+}
+
 #bill-labour-item {
     display: inline-block;
 }
@@ -550,15 +565,11 @@ div.jqi button {
     margin-bottom: 3px;
 }
 .address-div {width: 250px;}
-#bill-labour-details .bill-parts-item {
-    width: 400px;
-    float: left;
-    padding: 3px;
-}
+
 
 .grand-total {
-    font-size: 14px;
-    color: #00F;
+    font-size: 15px;
+    color: #000000;
     font-weight: bold;
     margin-top: 20px;
     float:right;
@@ -577,7 +588,8 @@ div.jqi button {
     color: #006db9;
     font-weight: bold;
     text-align: center;
-    margin: 30px 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 @media print {
@@ -588,12 +600,21 @@ div.jqi button {
     visibility: visible;
     font-size: 12px;
   }
+  
+  #bill-labour-details, #bill-parts-details {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+  }
+  
   #payment_mode {
       border:none;
       margin-top: -8px;
       margin-left: -9px;
   }
+  
   #round_off { border: none; }
+  
   #print_head {
       display: block;
       visibility: visible;

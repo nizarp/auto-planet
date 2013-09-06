@@ -31,6 +31,8 @@ $('document').ready(function() {
         
     });
     
+    $('#round_off').trigger('keyup');
+    
 });
 
 function formatNumber(n) {
