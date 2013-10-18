@@ -96,10 +96,10 @@ Class Billing_model extends MY_Model
     }
     
     function delete($id)
-    {
-        $this->db->delete($this->_table, array('id' => $id));
+    {        
         $this->db->delete('bill_charges', array('bill_id' => $id));
         $this->db->delete('bill_parts', array('bill_id' => $id));
+        return $this->db->delete($this->_table, array('id' => $id));
     }
     
 }

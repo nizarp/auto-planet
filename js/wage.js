@@ -10,7 +10,13 @@ $('document').ready(function() {
     
     $('.wage-delete-btn').click(function(){
         if(confirm('Are you sure you want to delete this Wage?')) {
-            self.location = '/index.php/wage/delete/'+$(this).attr('rel');
+            $.get('/index.php/wage/delete/'+$(this).attr('rel'), function(response){
+                if(response) {
+                    location.reload();
+                } else {
+                    alert('Could not delete record!');
+                }
+            });
         }
     });
     

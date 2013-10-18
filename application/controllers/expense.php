@@ -71,10 +71,14 @@ class Expense extends MY_Controller {
         if($userData['username'] != 'admin') {
             redirect('expense', 'refresh');
         } else {
-            $this->expense_model->delete($id);
+            $success = $this->expense_model->delete($id);
         }
         
-        redirect('expense', 'refresh');
+        if($success) {
+            echo 1;
+        } else {
+            echo 0;
+        }
     }    
     
     function update($id)

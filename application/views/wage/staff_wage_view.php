@@ -31,20 +31,20 @@
         
         <div class="rollup" style="display: block;">
             <div>
+                <label>Salary</label>
+                <span id="rollup_salary"><?= number_format($salary, 2) ?></span>
+            </div>
+            <div>
                 <label>This Month</label>
                 <span id="rollup_this_month_total"><?= number_format($thisMonthTotal, 2) ?></span>
             </div>
             <div>
                 <label>Last Month</label>
                 <span id="rollup_last_month_total"><?= number_format($lastMonthTotal, 2) ?></span>
-            </div>
+            </div>            
             <div>
-                <label>Salary</label>
-                <span id="rollup_salary"><?= number_format($salary, 2) ?></span>
-            </div>
-            <div>
-                <label>Balance</label>
-                <span id="rollup_salary"><?= number_format($salary - $thisMonthTotal, 2) ?></span>
+                <label>Last Month Balance</label>
+                <span id="rollup_salary"><?= number_format($salary - $lastMonthTotal, 2) ?></span>
             </div>
         </div>
         
@@ -91,6 +91,48 @@
         <div class="rollup-spacer">&nbsp;</div>
         
         <div class="month-head">Last Month:</div>
+        <table id="wage-list" class="grid-list">
+            <colgroup>
+                <col width="20%"/>
+                <col width="11%"/>
+                <col width="11%"/>
+                <col width="50%"/>
+                <col width="8%"/>
+            </colgroup>
+            <thead>
+                <th>Staff</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <?php
+                    $alternate = false;
+                ?>
+                <?php foreach ($earlier_month_wages as $wage): ?>
+                <?php $alternate = !$alternate; ?>
+                <tr <?php echo ($alternate)?'class="row"':'' ?>>
+                    <td><?php echo $staffs[$wage['staff']] ?></td>
+                    <td><?php echo $wage['amount'] ?></td>
+                    <td><?php echo date('M d, Y', strtotime($wage['created_on'])) ?></td>
+                    <td><?php echo character_limiter($wage['description'], 60) ?></td>
+                    <td>
+                        <img onclick="window.location='/index.php/wage/edit/<?php echo $wage['id'] ?>'" 
+                             src="/css/images/edit.png">
+                        <?php if($username == 'admin'): ?>
+                        <img class="wage-delete-btn" rel="<?php echo $wage['id'] ?>" 
+                             src="/css/images/delete.png">
+                        <? endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+        
+        <div class="rollup-spacer">&nbsp;</div>
+        
+        <div class="month-head">Earlier Months:</div>
         <table id="wage-list" class="grid-list">
             <colgroup>
                 <col width="20%"/>

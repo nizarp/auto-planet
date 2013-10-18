@@ -66,9 +66,7 @@ Class Jobsheet_model extends MY_Model
     }
     
     function updateJobsheetCharges($jobsheetId, $labourData)
-    {
-        $this->db->delete('jobsheet_charges', array('jobsheet_id' => $jobsheetId));
-        
+    {        
         foreach($labourData as $labour) {
             $data = array(
                 'jobsheet_id' => $jobsheetId,
@@ -80,6 +78,8 @@ Class Jobsheet_model extends MY_Model
             
             $this->db->insert('jobsheet_charges', $data);
         }
+        
+        return $this->db->delete('jobsheet_charges', array('jobsheet_id' => $jobsheetId));
     }
     
     function updateJobsheetParts($jobsheetId, $partsData)

@@ -14,7 +14,14 @@ $('document').ready(function() {
     
     $('.expense-delete-btn').click(function(){
         if(confirm('Are you sure you want to delete this Expense?')) {
-            self.location = '/index.php/expense/delete/'+$(this).attr('rel');
+            //self.location = '/index.php/expense/delete/'+$(this).attr('rel');
+            $.get('/index.php/expense/delete/'+$(this).attr('rel'), function(response){
+                if(response) {
+                    location.reload();
+                } else {
+                    alert('Could not delete record!');
+                }
+            });
         }
     });
     

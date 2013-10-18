@@ -42,5 +42,15 @@ Class Wage_model extends MY_Model
         return $query->result_array();
     }
     
+    function getAllBeforeMonth($staff, $month)
+    {
+        $query = $this->db
+                ->from($this->_table)
+                ->where('staff', $staff)
+                ->where('EXTRACT(YEAR_MONTH FROM created_on) < ', $month)
+                ->get();
+        return $query->result_array();
+    }
+    
 }
 ?>

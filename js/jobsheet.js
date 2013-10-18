@@ -23,7 +23,13 @@ $('document').ready(function() {
     
     $('.jobsheet-delete-btn').click(function(){
         if(confirm('Are you sure you want to delete this Jobsheet?')) {
-            self.location = '/index.php/jobsheet/delete/'+$(this).attr('rel');
+            $.get('/index.php/jobsheet/delete/'+$(this).attr('rel'), function(response){
+                if(response) {
+                    location.reload();
+                } else {
+                    alert('Could not delete record!');
+                }
+            });
         }
     });
 

@@ -61,10 +61,14 @@ class Jobsheet extends MY_Controller {
         if($userData['username'] != 'admin') {
             redirect('jobsheet', 'refresh');
         } else {        
-            $this->jobsheet_model->delete($id);
+            $success = $this->jobsheet_model->delete($id);
         }
         
-        redirect('jobsheet', 'refresh');
+        if($success) {
+            echo 1;
+        } else {
+            echo 0;
+        }
     }    
     
     function update($id)

@@ -45,8 +45,9 @@ class Wage extends MY_Controller {
             
             $data['this_month_wages'] = $this->wage_model->getAllForMonth($keyword, $thisMonth);
             $data['thisMonthTotal'] = array_sum_by_key($data['this_month_wages'], 'amount');            
-            $data['last_month_wages'] = $this->wage_model->getAllForMonth($keyword, $lastMonth);        
+            $data['last_month_wages'] = $this->wage_model->getAllForMonth($keyword, $lastMonth);
             $data['lastMonthTotal'] = array_sum_by_key($data['last_month_wages'], 'amount');
+            $data['earlier_month_wages'] = $this->wage_model->getAllBeforeMonth($keyword, $lastMonth);
             
             $data['salary'] = $this->staff_model->getSalary($keyword);
             
@@ -86,10 +87,14 @@ class Wage extends MY_Controller {
         if($userData['username'] != 'admin') {
             redirect('wage', 'refresh');
         } else {
-            $this->wage_model->delete($id);
+            $success = $this->wage_model->delete($id);
         }
         
-        redirect('wage', 'refresh');
+        if($success) {
+            echo 1;
+        } else {
+            echo 0;
+        }
     }
     
     function create()

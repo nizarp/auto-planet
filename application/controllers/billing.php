@@ -67,10 +67,14 @@ class Billing extends MY_Controller {
         if($userData['username'] != 'admin') {
             redirect('billing', 'refresh');
         } else {        
-            $this->billing_model->delete($id);
+            $success = $this->billing_model->delete($id);
         }
         
-        redirect('billing', 'refresh');
+        if($success) {
+            echo 1;
+        } else {
+            echo 0;
+        }
     }
     
     function update($id)

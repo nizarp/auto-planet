@@ -2,7 +2,14 @@ $('document').ready(function() {
     
     $('.bill-delete-btn').click(function(){
         if(confirm('Are you sure you want to delete this Bill?')) {
-            self.location = '/index.php/billing/delete/'+$(this).attr('rel');
+            //self.location = '/index.php/billing/delete/'+$(this).attr('rel');
+            $.get('/index.php/billing/delete/'+$(this).attr('rel'), function(response){
+                if(response) {
+                    location.reload();
+                } else {
+                    alert('Could not delete record!');
+                }
+            });
         }
     });
     
