@@ -57,7 +57,7 @@
                     <td><?php echo character_limiter($wage['description'], 60) ?></td>
                     <td>
                         <img onclick="window.location='/index.php/wage/edit/<?php echo $wage['id'] ?>'" 
-                             src="/css/images/edit.png">
+                             src="/css/images/edit.png">&nbsp;
                         <?php if($username == 'admin'): ?>
                         <img class="wage-delete-btn" rel="<?php echo $wage['id'] ?>" 
                              src="/css/images/delete.png">

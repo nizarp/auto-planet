@@ -79,7 +79,10 @@ class Part extends MY_Controller {
         
         $data['part'] = array(
             "id" => '',
-            "name" => '',
+            "part_no" => '',
+            "hsn_code" => '',
+            "part_name" => '',
+            "quantity" => '',
             "dealer_price" => '',
             "mrp" => '',
             "description" => ''
@@ -93,7 +96,10 @@ class Part extends MY_Controller {
             
 		} else {
             $data = array(
-                "name" => $this->input->post('name'),
+                "part_no" => $this->input->post('part_no'),
+                "hsn_code" => $this->input->post('hsn_code'),
+                "part_name" => $this->input->post('part_name'),
+                "quantity" => $this->input->post('quantity'),
                 "dealer_price" => round($this->input->post('dealer_price'),2),
                 "mrp" => round($this->input->post('mrp'),2),
                 "description" => $this->input->post('description')
@@ -128,7 +134,10 @@ class Part extends MY_Controller {
 		} else {
             
             $data = array(
-                "name" => $this->input->post('name'),
+                "part_no" => $this->input->post('part_no'),
+                "hsn_code" => $this->input->post('hsn_code'),
+                "part_name" => $this->input->post('part_name'),
+                "quantity" => $this->input->post('quantity'),
                 "dealer_price" => round($this->input->post('dealer_price'),2),
                 "mrp" => round($this->input->post('mrp'),2),
                 "description" => $this->input->post('description')
@@ -146,14 +155,8 @@ class Part extends MY_Controller {
         $partId = $this->input->post('id');
         $quantity = (int)$this->input->post('value');
         
-        $this->load->model('part_stock_model');
-        
-        $stock = $this->part_stock_model->getByPartID($partId);
-        if(count($stock) > 0) {
-            $this->part_stock_model->update($stock['id'], array('quantity' => $quantity));
-        } else {
-            $this->part_stock_model->create(array('part_id' => $partId, 'quantity' => $quantity));
-        }
+        $this->load->model('part_model');        
+        $this->part_model->update($partId, array('quantity' => $quantity));
         
         echo $quantity;
     }

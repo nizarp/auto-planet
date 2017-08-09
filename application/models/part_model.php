@@ -11,14 +11,15 @@ Class Part_model extends MY_Model
     
     function getAll($offset = 0, $limit = 0, $keyword = '') {
         
-        $this->db->select('parts.*, parts_stock.quantity');
+        $this->db->select('parts.*');
         $this->db->from('parts');
-        $this->db->join('parts_stock', 'parts_stock.part_id = parts.id', 'left');
         if($keyword != '') {
-            $this->db->like('name', $keyword);
-            $this->db->or_like('parts.id', $keyword);
+            $this->db->like('part_name', $keyword);
+            $this->db->or_like('id', $keyword);
+            $this->db->or_like('part_no', $keyword);
+            $this->db->or_like('hsn_code', $keyword);
         }
-        $this->db->order_by("name");
+        $this->db->order_by("part_name");
         if($limit > 0) {
             $this->db->limit($limit, $offset);
         }
@@ -29,7 +30,7 @@ Class Part_model extends MY_Model
     function getCount($keyword)
     {
         if($keyword != '') {
-            $this->db->like('name', $keyword);
+            $this->db->like('part_name', $keyword);
         }
         $this->db->from($this->_table);
         return $this->db->count_all_results();
@@ -38,7 +39,7 @@ Class Part_model extends MY_Model
     
     function getStock($partId)
     {
-        $query = $this->db->get_where('parts_stock', array('part_id' => $partId));
+        $query = $this->db->get_where('parts', array('id' => $partId));
         $data = $query->row_array();
         if(isset($data['quantity'])) {
             return $data['quantity'];

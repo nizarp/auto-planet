@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://auto-planet.local/';
+$config['base_url']	= 'http://autoplanet.local/';
 
 /*
 |--------------------------------------------------------------------------

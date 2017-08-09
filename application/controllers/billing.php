@@ -92,14 +92,15 @@ class Billing extends MY_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');     
         $this->load->model('jobsheet_model');
+        $this->load->model('billing_model');
         $this->load->model('part_model');
         
         $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
         $data['title'] = 'Create Bill';
         $data['tab'] = 'Billing';
-        $data['formName'] = "billing/create/$jobsheetId";
-        
+        $data['formName'] = "billing/create/$jobsheetId";        
         $data['jobsheet'] = $jobsheet = $this->jobsheet_model->get($jobsheetId);
+        $data['billNo'] = $this->billing_model->getNextBillNo();
         
         if($jobsheet['status'] != 'complete') {
             redirect('billing', 'refresh');
@@ -108,8 +109,12 @@ class Billing extends MY_Controller {
         $data['paymentModes'] = $this->billing_model->getPaymentModes();
         $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($jobsheetId);
         $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($jobsheetId);
-        $data['labourTax'] = 0.1236;
-        $data['partsTax'] = 0.145;
+
+        $this->config->load('ap_settings');
+        $data['labourTaxSgst'] = $this->config->item('labour_tax_sgst');
+        $data['labourTaxCgst'] = $this->config->item('labour_tax_cgst');
+        $data['partsTaxSgst'] = $this->config->item('parts_tax_sgst');
+        $data['partsTaxCgst'] = $this->config->item('parts_tax_cgst');
         
         $jobtypes = $this->jobsheet_model->getAllJobtypes();
         foreach($jobtypes as $jobtype) {
@@ -122,7 +127,7 @@ class Billing extends MY_Controller {
             $partsList[$part['id']] = $part;
         }
         $data['parts'] = $partsList;
-        
+        //print_r($parts); die;
         
         $data['bill'] = array(
             'payment_mode' => ''

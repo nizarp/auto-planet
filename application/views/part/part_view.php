@@ -15,7 +15,7 @@
         <?php echo form_open('part/search'); ?>
             <div id="part-search">
                 <input type="text" name="search" value="<?php echo $keyword; ?>" 
-                       placeholder="Enter Name or Part ID"/>
+                       placeholder="Enter Keyword"/>
                 <input type="submit" value="Search" id="search_btn" />
             </div>
         <?php echo form_close(); ?>
@@ -23,16 +23,20 @@
         <table id="part-list" class="grid-list">
             <colgroup>
                 <col width="10%"/>
-                <col width="60%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="40%"/>
                 <col width="10%"/>
                 <col width="10%"/>
                 <col width="10%"/>
             </colgroup>
             <thead>
-                <th>Part ID</th>
-                <th>Name</th>
-                <th>MRP</th>
+                <th>ID</th>
+                <th>Part No.</th>
+                <th>HSN Code</th>
+                <th>Part Name</th>
                 <th>Quantity</th>
+                <th>MRP</th>                
                 <th>Actions</th>
             </thead>
             <tbody>
@@ -43,9 +47,11 @@
                 <?php $alternate = !$alternate; ?>
                 <tr title="<?php echo $part['description'] ?>" <?php echo ($alternate)?'class="row"':'' ?>>
                     <td><?php echo $part['id'] ?></td>
-                    <td><?php echo $part['name'] ?></td>
-                    <td><?php echo $part['mrp'] ?></td>
+                    <td><?php echo $part['part_no'] ?></td>
+                    <td><?php echo $part['hsn_code'] ?></td>
+                    <td><?php echo $part['part_name'] ?></td>
                     <td class="edit_area" id="<?php echo $part['id']; ?>"><?php echo ($part['quantity']) ? $part['quantity'] : 0 ?></td>
+                    <td><?php echo $part['mrp'] ?></td>                    
                     <td>
                         <?php if($username == 'admin'): ?>
                         <img onclick="window.location='/index.php/part/edit/<?php echo $part['id'] ?>'" 

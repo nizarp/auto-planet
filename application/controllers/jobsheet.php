@@ -73,7 +73,7 @@ class Jobsheet extends MY_Controller {
     
     function update($id)
     {
-        $data = $this->input->post('data');        
+        $data = $this->input->post('data');
         $this->jobsheet_model->update($id, $data);
     }
     
@@ -108,7 +108,7 @@ class Jobsheet extends MY_Controller {
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
-            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];
+            $partsList[$part['id']] = $this->getPartNameForAutoComplete($part);
         }
         $data['parts'] = $partsList;
         
@@ -275,7 +275,7 @@ class Jobsheet extends MY_Controller {
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
-            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];            
+            $partsList[$part['id']] = $this->getPartNameForAutoComplete($part);
         }
         $data['parts'] = $partsList;
         
@@ -330,7 +330,7 @@ class Jobsheet extends MY_Controller {
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
-            $partsList[$part['id']] = $part['id']. ' - ' .$part['name'];            
+            $partsList[$part['id']] = $this->getPartNameForAutoComplete($part);
         }
         $data['parts'] = $partsList;
         
@@ -432,20 +432,27 @@ class Jobsheet extends MY_Controller {
             );
             
             $this->jobsheet_model->update($id, $data);
-            
-            // Update Labour charges
-            if(!empty($labourInput)) {
-                $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
-            }
-            
-            // Update Jobsheet Parts
-            if(!empty($partsInput)) {
-                $this->jobsheet_model->updateJobsheetParts($id, $partsInput);
-            }
+            $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
+            $this->jobsheet_model->updateJobsheetParts($id, $partsInput);
             
             redirect('jobsheet', 'refresh');
         }
         
+    }
+
+    function getPartNameForAutoComplete($part) {
+
+        $formattedName = $part['part_name'];
+
+        if(!empty($part['part_no'])) {
+            $formattedName = $part['part_no'] . ' - ' . $formattedName;
+        }
+
+        if(!empty($part['hsn_code'])) {
+            $formattedName = $formattedName . ' [' . $part['hsn_code'] . ']';
+        }
+
+        return $formattedName;
     }
 
 }

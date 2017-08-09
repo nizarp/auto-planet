@@ -80,9 +80,14 @@ $config = array(
     ),
     'part_form' => array(
         array(
-              'field'   => 'name', 
-              'label'   => 'Name', 
+              'field'   => 'part_name', 
+              'label'   => 'Part Name', 
               'rules'   => 'required'
+           ),
+        array(
+              'field'   => 'quantity', 
+              'label'   => 'Quantity', 
+              'rules'   => 'required|numeric'
            ),
         array(
               'field'   => 'dealer_price', 

@@ -65,7 +65,7 @@
                     <td><?php echo date('M d, Y', strtotime($expense['created_on'])) ?></td>
                     <td>
                         <img onclick="window.location='/index.php/expense/edit/<?php echo $expense['id'] ?>'" 
-                             src="/css/images/edit.png">
+                             src="/css/images/edit.png">&nbsp;
                         <?php if($username == 'admin'): ?>
                         <img class="expense-delete-btn" rel="<?php echo $expense['id'] ?>" 
                              src="/css/images/delete.png">

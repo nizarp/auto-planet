@@ -67,40 +67,49 @@ Class Jobsheet_model extends MY_Model
     
     function updateJobsheetCharges($jobsheetId, $labourData)
     {        
-        foreach($labourData as $labour) {
-            $data = array(
-                'jobsheet_id' => $jobsheetId,
-                'staff' => $labour['staff'],
-                'job_type' => $labour['job_type'],
-                'description' => $labour['description'],
-                'amount' => $labour['amount']
-            );
-            
-            $this->db->insert('jobsheet_charges', $data);
-        }
-        
-        return $this->db->delete('jobsheet_charges', array('jobsheet_id' => $jobsheetId));
+
+        $this->db->delete('jobsheet_charges', array('jobsheet_id' => $jobsheetId));
+
+        if(!empty($labourData)) {
+            foreach($labourData as $labour) {
+                $data = array(
+                    'jobsheet_id' => $jobsheetId,
+                    'staff' => $labour['staff'],
+                    'job_type' => $labour['job_type'],
+                    'description' => $labour['description'],
+                    'amount' => $labour['amount']
+                );
+
+                $this->db->insert('jobsheet_charges', $data);
+            }   
+        }     
+
+        return true;
     }
     
     function updateJobsheetParts($jobsheetId, $partsData)
     {
         $this->deleteJobsheetParts($jobsheetId);
         
-        foreach($partsData as $part) {
-            
-            // Assign parts to Jobsheet
-            $data = array(
-                'jobsheet_id' => $jobsheetId,
-                'part_id' => $part['part_id'],
-                'qty' => $part['qty']
-            );            
-            $this->db->insert('jobsheet_parts', $data);
-            
-            // Minus from existing stock
-            $this->db->where('part_id', $part['part_id']);
-            $this->db->set('quantity', "quantity - ".$part['qty'], FALSE);
-            $this->db->update('parts_stock');
+        if(!empty($partsData)) {
+            foreach($partsData as $part) {
+                
+                // Assign parts to Jobsheet
+                $data = array(
+                    'jobsheet_id' => $jobsheetId,
+                    'part_id' => $part['part_id'],
+                    'qty' => $part['qty']
+                );            
+                $this->db->insert('jobsheet_parts', $data);
+                
+                // Minus from existing stock
+                $this->db->where('id', $part['part_id']);
+                $this->db->set('quantity', "quantity - ".$part['qty'], FALSE);
+                $this->db->update('parts');
+            }
         }
+
+        return true;
     }
     
     function deleteJobsheetParts($jobsheetId) 
@@ -108,18 +117,17 @@ Class Jobsheet_model extends MY_Model
         $this->db->select('jobsheet_id, parts.id, qty, quantity as stock');
         $this->db->from('jobsheet_parts');
         $this->db->join('parts', 'parts.id = jobsheet_parts.part_id', 'left');
-        $this->db->join('parts_stock', 'parts_stock.part_id = parts.id', 'left');
         $this->db->where('jobsheet_parts.jobsheet_id', $jobsheetId);
         $query = $this->db->get();
         $data = $query->result_array();
-        
+
         // Add parts to existing stock
         foreach($data as $partsData) {
             $updateData = array(
                 'quantity' => $partsData['stock'] + $partsData['qty']
             );
-            $this->db->where('part_id', $partsData['id']);            
-            $this->db->update('parts_stock', $updateData);            
+            $this->db->where('parts.id', $partsData['id']);            
+            $this->db->update('parts', $updateData);            
         }
         
         // Delete Jobsheet Parts

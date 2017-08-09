@@ -105,7 +105,7 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $first_link		= '&lsaquo; First';
+	protected $first_link		= '&laquo; First';
 
 	/**
 	 * Next link
@@ -126,7 +126,7 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $last_link		= 'Last &rsaquo;';
+	protected $last_link		= 'Last &raquo;';
 
 	/**
 	 * URI Segment

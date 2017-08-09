@@ -1,4 +1,4 @@
-$('document').ready(function() {    
+$('document').ready(function() {
     
     /** For datePicker **/
     var datePickerOpts = {
@@ -33,39 +33,39 @@ $('document').ready(function() {
         }
     });
 
-    $('.jobsheet-status').click(function () {
-        previous = $(this).val();
-    }).change(function(){
+    $('.jobsheet-status').change(function(){
         if($(this).val() == 'reopen') {
-            var password = prompt('Please enter Re-open Password');
-            if(password != null) {
-                if(hex_md5(password) == '5f4dcc3b5aa765d61d8327deb882cf99') {
-                    changeStatus($(this).attr('rel'), $(this).val());
-                } else {
-                    $.prompt('Wrong Password!')
-                    $(this).val(previous);
-                }
-            } else {
-                $(this).val(previous);
-            }
+            changeStatus($(this).attr('rel'), $(this).val());
         } else if($(this).val() == 'open') {
-            $.prompt('You can not change a status to Open. Please use Reopen instead');
-            $(this).val(previous);
+            $.prompt('You can not change a status to Open. Please use Reopen instead', {
+                close: function () {
+                    location.reload();
+                }
+            });            
         } else {
             if($(this).attr('data') == '') {
-                $.prompt('Please enter Delivery date in the Jobsheet to proceed');
-                $(this).val(previous);
+                $.prompt('Please enter Delivery date in the Jobsheet to proceed', {
+                    close: function () {
+                        location.reload();
+                    }
+                });
             } else {
                 if($(this).attr('items') == 0) {
-                    $.prompt('Please enter Labour / Parts details to proceed');
-                    $(this).val(previous);
+                    $.prompt('Please enter Labour / Parts details to proceed', {
+                        close: function () {
+                            location.reload();
+                        }
+                    });
                 } else {
-                    if($(this).val() == 'close' && previous != 'complete') {
+                    if($(this).val() == 'close' && $(this).parent().attr('rel') != 'complete') {
                         $.prompt('Only completed jobsheets can be closed. \n\
-                                    Please complete the jobsheet and try again.');
-                        $(this).val(previous);
+                                    Please complete the jobsheet and try again.', {                            close: function () {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        changeStatus($(this).attr('rel'), $(this).val());
                     }
-                    changeStatus($(this).attr('rel'), $(this).val());
                 }
             }
         }
@@ -75,7 +75,10 @@ $('document').ready(function() {
     {
         var data = {'status' : status};        
         $.post('/index.php/jobsheet/update/'+id, {'data': data}, function(response){
-            console.log(response);
+            $.prompt('Status changed successfully!', {                            close: function () {
+                    location.reload();
+                }
+            });
         });
     }
     

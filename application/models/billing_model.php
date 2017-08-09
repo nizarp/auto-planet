@@ -56,6 +56,14 @@ Class Billing_model extends MY_Model
         
     }
     
+    function getNextBillNo()
+    {
+        $this->db->select('MAX(id) as bill_no');
+        $query = $this->db->get($this->_table);
+        $data = $query->row_array();
+        return $data['bill_no'] + 1;
+    }
+
     function getPaymentModes()
     {
         $query = $this->db->get('payment_modes');

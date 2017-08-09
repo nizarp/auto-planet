@@ -68,7 +68,7 @@
                     <td><?php echo str_ireplace($keyword, "<span class='highlight'>{$keyword}</span>", $jobsheet['name']) ?></td>                    
                     <td><?php echo date('M d, Y', strtotime($jobsheet['created_on'])) ?></td>
                     <td><?php echo date('M d, Y', strtotime($jobsheet['promised_date'])) ?></td>
-                    <td>
+                    <td rel="<?= $jobsheet['status'] ?>">
                         <?php
                         $statuses = array(
                             'open' => 'Open',
@@ -89,7 +89,7 @@
                         </select>
                     </td>
                     <td>
-                        <img rel="<?= $jobsheet['id'] ?>" class="jobsheet-edit-btn" src="/css/images/edit.png">
+                        <img rel="<?= $jobsheet['id'] ?>" class="jobsheet-edit-btn" src="/css/images/edit.png"> &nbsp;
                         <?php if($username == 'admin'): ?>
                         <img class="jobsheet-delete-btn" rel="<?= $jobsheet['id'] ?>" src="/css/images/delete.png">
                         <? endif; ?>

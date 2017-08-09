@@ -15,8 +15,20 @@
     <div id="billing-form">        
         <div class="error"><?php echo validation_errors(); ?></div>
         <div id="section-to-print">
-            <div id="print_head">Auto Planet - Bill</div>
-            <p><h3>Jobsheet Details:</h3></p>
+            <div id="print_head">
+                Auto Planet
+                <p>Bosch Express Car Service Centre</p>
+            </div>
+            <div id="print_body">
+                Calicut Roard, Angadippuram,<br/>
+                Malappuram, Kerala,<br/>
+                India - 679321<br/>
+                Ph: +91-9037-941525, +91-9526-164408<br/>
+                GSTIN: 32BCMPM5674H
+            </div>
+            
+            <p><div id="sub-head">Invoice</div></p>
+
             <div id="bill-details">        
             <div class="grid_1 alpha">
                 <p>
@@ -25,7 +37,7 @@
                 </p>
                 <p>
                     <label>Customer Name:</label>
-                    <?= $jobsheet['name'] ?>
+                    <?= ucwords($jobsheet['name']) ?>
                 </p>
                 <p>
                     <label>Reg. No.:</label>
@@ -51,6 +63,10 @@
             </div>
             <div class="grid_2 beta">
                 <p>
+                    <label>Bill No.:</label>   
+                    <?= $billNo ?>
+                </p>
+                <p>
                     <label>Bill Date:</label>   
                     <?= date('d/m/Y') ?>
                     <?php echo form_hidden('bill_date', date('Y-m-d')) ?>
@@ -60,13 +76,114 @@
                     <?= $jobsheet['contact'] ?>
                 </p>
                 <p>
-                    <label>Address</label>
+                    <label>Address:</label>
                     <div class="address-div"><?= nl2br($jobsheet['address']) ?></div>
                 </p>
             </div>
             </div>
         <div class="clear"></div>    
         
+        <p><h3>Parts Description:</h3></p>
+        <div id="bill-parts-details">            
+            <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
+                <?php $i = 1; ?>
+                <?php $partsTotal = 0; ?>
+                <div id="bill-labour-item">
+                    <div class="bill-parts-sno border-bottom"><strong>Srl</strong></div>
+                    <div class="bill-parts-pno border-bottom"><strong>Part No.</strong></div>
+                    <div class="bill-parts-desc border-bottom"><strong>Description</strong></div>
+                    <div class="bill-parts-rate border-bottom"><strong>Rate</strong></div>
+                    <div class="bill-parts-tax border-bottom">
+                        <strong>SGST </strong>(<?= round($partsTaxSgst,2) ?>%)
+                    </div>
+                    <div class="bill-parts-tax border-bottom">
+                        <strong>CGST </strong>(<?= round($partsTaxCgst,2) ?>%)
+                    </div>
+                    <div class="bill-parts-qty border-bottom"><strong>Qty</strong></div>
+                    <div class="bill-parts-amount border-bottom"><strong>Total</strong></div>
+                </div>
+
+                <?php foreach ($jobsheet['jobsheet_parts'] as $jobsheetPart) { ?>
+                    <div id="bill-labour-item">
+                        <div class="bill-parts-sno"><?= $i ?></div>
+                        <div class="bill-parts-pno"><?= $parts[$jobsheetPart['part_id']]['id'] ?></div>
+                        <div class="bill-parts-desc"><?= $parts[$jobsheetPart['part_id']]['part_name'] ?></div>
+                        <div class="bill-parts-rate">
+                            <?= number_format($parts[$jobsheetPart['part_id']]['mrp'],2) ?>
+                        </div>
+                        <div class="bill-parts-tax">
+                            <?= number_format(round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTaxSgst/100, 2), 2) ?>
+                        </div>
+                        <div class="bill-parts-tax">
+                            <?= number_format(round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTaxCgst/100, 2), 2) ?>
+                        </div>
+                        <div class="bill-parts-qty"><?= $jobsheetPart['qty'] ?></div>
+                        <div class="bill-parts-amount">
+                            <?php
+                            echo number_format(
+                                round(
+                                    (
+                                        ($parts[$jobsheetPart['part_id']]['mrp'] * ($partsTaxSgst + $partsTaxCgst)/100) 
+                                        + $parts[$jobsheetPart['part_id']]['mrp']
+                                    ) * $jobsheetPart['qty'],
+                                    2
+                                ), 
+                                2
+                            );
+                            ?>
+                        </div>
+                    </div>
+                    <? 
+                    echo form_hidden(
+                        "bill_parts[$i][part_name]",
+                        $parts[$jobsheetPart['part_id']]['part_name']
+                    );
+
+                    echo form_hidden(
+                        "bill_parts[$i][rate]",
+                        $parts[$jobsheetPart['part_id']]['mrp']
+                    );
+
+                    echo form_hidden(
+                        "bill_parts[$i][tax]",
+                        round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTaxSgst / 100, 2)
+                    );
+
+                    echo form_hidden(
+                        "bill_parts[$i][tax]",
+                        round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTaxCgst / 100, 2)
+                    );
+                
+                    echo form_hidden(
+                        "bill_parts[$i][quantity]",
+                        $jobsheetPart['qty']
+                    );
+                    
+                    $total = round((($parts[$jobsheetPart['part_id']]['mrp'] * ($partsTaxSgst+$partsTaxCgst) / 100) 
+                                + $parts[$jobsheetPart['part_id']]['mrp']) * $jobsheetPart['qty'], 2);
+                    echo form_hidden(
+                        "bill_parts[$i][total]",
+                        $total
+                    );
+
+                    $i++;
+                    $partsTotal+= $total;
+                    ?>
+                <?php } ?>
+                <div id="bill-labour-item">
+                    <div class="bill-parts-sno"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-pno"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-desc"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-rate"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-tax"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-tax"><strong>&nbsp;</strong></div>
+                    <div class="bill-parts-qty border-top"><strong>Total:</strong></div>
+                    <div class="bill-parts-tax border-top"><?= number_format($partsTotal, 2) ?></div>
+                </div>
+                <input type="hidden" value="<?= $partsTotal ?>" id="parts_total" />
+            <?php } ?>
+        </div>
+
         <p><h3>Labour Details:</h3></p>
         <div id="bill-labour-details">            
             <?php if(isset($jobsheet['labour_charges'])) { ?>
@@ -76,27 +193,37 @@
                     $taxTotal = 0;
                 ?>
                 <div id="bill-labour-item">
+                    <div class="bill-charges-qty border-bottom"><strong>Srl</strong></div>
                     <div class="bill-charges-desc border-bottom"><strong>Job Description</strong></div>
                     <div class="bill-charges-amount border-bottom"><strong>Charge</strong></div>
                     <div class="bill-charges-amount border-bottom">
-                        <strong>Tax </strong>(<?= round($labourTax * 100,2) ?>%)
+                        <strong>SGST </strong>(<?= round($labourTaxSgst, 2) ?>%)
+                    </div>
+                    <div class="bill-charges-amount border-bottom">
+                        <strong>CGST </strong>(<?= round($labourTaxCgst, 2) ?>%)
                     </div>
                     <div class="bill-charges-amount border-bottom"><strong>Total</strong></div>
                 </div>
                 <?php foreach ($jobsheet['labour_charges'] as $labourCharge) { ?>
                     <div id="bill-labour-item">
+                        <div class="bill-charges-qty">
+                            <?= $i ?>
+                        </div>
                         <div class="bill-charges-desc">
                             <?php echo $jobtypes[$labourCharge['job_type']]. ' - '. $labourCharge['description'] ?>
                         </div>
                         <div class="bill-charges-amount"><?= number_format($labourCharge['amount'],2) ?></div>
                         <div class="bill-charges-amount">
-                            <?= number_format(round($labourCharge['amount']*$labourTax, 2),2) ?>
+                            <?= number_format(round($labourCharge['amount']*$labourTaxSgst/100, 2),2) ?>
+                        </div>
+                        <div class="bill-charges-amount">
+                            <?= number_format(round($labourCharge['amount']*$labourTaxCgst/100, 2),2) ?>
                         </div>
                         <div class="bill-charges-amount">
                             <?php 
                                 echo number_format(
                                     round(
-                                        ($labourCharge['amount']*$labourTax) + $labourCharge['amount'], 
+                                        ($labourCharge['amount'] * ($labourTaxSgst + $labourTaxCgst) / 100 + $labourCharge['amount']), 
                                          2
                                     ), 
                                     2
@@ -117,10 +244,14 @@
 
                     echo form_hidden(
                             "bill_charges[$i][tax]",
-                            round($labourCharge['amount']*$labourTax, 2)
+                            round($labourCharge['amount']*$labourTaxSgst/100, 2)
+                        );
+                    echo form_hidden(
+                            "bill_charges[$i][tax]",
+                            round($labourCharge['amount']*$labourTaxCgst/100, 2)
                         );
                     
-                    $total = round(($labourCharge['amount']*$labourTax) + $labourCharge['amount'], 2);
+                    $total = round(($labourCharge['amount']*($labourTaxSgst + $labourTaxCgst)/100) + $labourCharge['amount'], 2);
                     echo form_hidden(
                             "bill_charges[$i][total]",
                             $total
@@ -128,11 +259,13 @@
 
                     $i++;
                     $labourTotal+= $total;
-                    $taxTotal+= round($labourCharge['amount']*$labourTax, 2);
+                    $taxTotal+= round($labourCharge['amount']*($labourTaxSgst + $labourTaxCgst)/100, 2);
                     ?>
                 <?php } ?>
                 <div id="bill-labour-item">
+                    <div class="bill-charges-qty">&nbsp;</div>
                     <div class="bill-charges-desc">&nbsp;</div>
+                    <div class="bill-charges-amount">&nbsp;</div>
                     <div class="bill-charges-amount">&nbsp;</div>
                     <div class="bill-charges-amount border-top"><strong>Total:</strong></div>
                     <div class="bill-charges-amount border-top"><?= number_format($labourTotal, 2) ?></div>
@@ -141,108 +274,28 @@
             <?php } ?>
         </div>
         
-        <p><h3>Parts Description:</h3></p>
-        <div id="bill-parts-details">            
-            <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
-                <?php $i = 1; ?>
-                <?php $partsTotal = 0; ?>
-                <div id="bill-labour-item">
-                    <div class="bill-parts-item border-bottom"><strong>Item Description</strong></div>
-                    <div class="bill-charges-amount border-bottom"><strong>Rate</strong></div>
-                    <div class="bill-charges-amount border-bottom">
-                        <strong>Tax </strong>(<?= round($partsTax * 100,2) ?>%)
-                    </div>
-                    <div class="bill-charges-amount border-bottom"><strong>Quantity</strong></div>
-                    <div class="bill-charges-amount border-bottom"><strong>Total</strong></div>
-                </div>
-                <?php foreach ($jobsheet['jobsheet_parts'] as $jobsheetPart) { ?>
-                    <div id="bill-labour-item">
-                        <div class="bill-parts-item"><?= $parts[$jobsheetPart['part_id']]['name'] ?></div>
-                        <div class="bill-charges-amount">
-                            <?= number_format($parts[$jobsheetPart['part_id']]['mrp'],2) ?>
-                        </div>
-                        <div class="bill-charges-amount">
-                            <?= number_format(round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax, 2), 2) ?>
-                        </div>
-                        <div class="bill-charges-amount"><?= $jobsheetPart['qty'] ?></div>
-                        <div class="bill-charges-amount">
-                            <?php
-                            echo number_format(
-                                round(
-                                    (
-                                        ($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax) 
-                                        + $parts[$jobsheetPart['part_id']]['mrp']
-                                    ) * $jobsheetPart['qty'],
-                                    2
-                                ), 
-                                2
-                            );
-                            ?>
-                        </div>
-                    </div>
-                    <? 
-                    echo form_hidden(
-                            "bill_parts[$i][part_name]",
-                            $parts[$jobsheetPart['part_id']]['name']
-                    );
-
-                    echo form_hidden(
-                            "bill_parts[$i][rate]",
-                            $parts[$jobsheetPart['part_id']]['mrp']
-                        );
-
-                    echo form_hidden(
-                            "bill_parts[$i][tax]",
-                            round($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax, 2)
-                        );
-                    
-                    echo form_hidden(
-                            "bill_parts[$i][quantity]",
-                            $jobsheetPart['qty']
-                        );
-                    
-                    $total = round((($parts[$jobsheetPart['part_id']]['mrp'] * $partsTax) 
-                                + $parts[$jobsheetPart['part_id']]['mrp']) * $jobsheetPart['qty'], 2);
-                    echo form_hidden(
-                            "bill_parts[$i][total]",
-                            $total
-                        );
-
-                    $i++;
-                    $partsTotal+= $total;
-                    ?>
-                <?php } ?>
-                <div id="bill-labour-item">
-                    <div class="bill-parts-item">&nbsp;</div>
-                    <div class="bill-charges-amount">&nbsp;</div>
-                    <div class="bill-charges-amount">&nbsp;</div>
-                    <div class="bill-charges-amount border-top"><strong>Total:</strong></div>
-                    <div class="bill-charges-amount border-top"><?= number_format($partsTotal, 2) ?></div>
-                </div>
-                <input type="hidden" value="<?= $partsTotal ?>" id="parts_total" />
-            <?php } ?>
-        </div>
-        
         <div>
             <strong>Round Off: </strong>
             <?php 
                 echo form_input(
                     'round_off',
-                    ceil($taxTotal),
-                    'id="round_off" placeholder="'.ceil($taxTotal).'"'
+                    '',
+                    'id="round_off" placeholder="NA"'
                 ); 
             ?>
         </div>
         <div class="clear"></div>
         
-        <div style="display:inline-block">
+        <div id="grand-total-div" style="display:inline-block">
             <div class="grand-total">Grand Total: 
                 <span id="grand_total_span"><?= number_format(floor($labourTotal+$partsTotal)) ?></span>
             /-</div>
             <input type="hidden" name="grand_total" id="grand_total" 
                    value="<?= floor($labourTotal+$partsTotal)?>" />
         </div>
-        </div>        
+        </div>  
+
+        <div class="clear"></div>      
     </div>        
         
     <div class="nextprev">
