@@ -35,7 +35,7 @@ CREATE TABLE `bill` (
   `round_off` decimal(10,4) DEFAULT NULL,
   `grand_total` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `bill` (
 
 LOCK TABLES `bill` WRITE;
 /*!40000 ALTER TABLE `bill` DISABLE KEYS */;
-INSERT INTO `bill` VALUES (1,128,'Nisar','2017-08-08 00:00:00','','8547257874','1','KL-07-BS-8068','',0.0000,5725.00);
+INSERT INTO `bill` VALUES (1,128,'Nisar','2017-08-08 00:00:00','','8547257874','1','KL-07-BS-8068','',0.0000,5725.00),(4,127,'muhsin','2017-08-10 00:00:00','','9847665036','1','KL-10-AE-6630','',0.0000,29452.00);
 /*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `bill_charges` (
   `tax` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `bill_charges` (
 
 LOCK TABLES `bill_charges` WRITE;
 /*!40000 ALTER TABLE `bill_charges` DISABLE KEYS */;
+INSERT INTO `bill_charges` VALUES (1,2,'Mechanical - ',5000.00,450.00,5900.00),(2,2,'Dent Removal - ',2500.00,225.00,2950.00),(3,2,'Polishing - ',890.00,80.10,1050.20),(7,4,'Mechanical - ',5000.00,450.00,5900.00),(8,4,'Dent Removal - ',2500.00,225.00,2950.00),(9,4,'Polishing - ',890.00,80.10,1050.20);
 /*!40000 ALTER TABLE `bill_charges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +92,7 @@ CREATE TABLE `bill_parts` (
   `quantity` int(11) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +101,7 @@ CREATE TABLE `bill_parts` (
 
 LOCK TABLES `bill_parts` WRITE;
 /*!40000 ALTER TABLE `bill_parts` DISABLE KEYS */;
-INSERT INTO `bill_parts` VALUES (1,1,'Test Part',2500.00,362.50,2,5725.00);
+INSERT INTO `bill_parts` VALUES (1,1,'Test Part',2500.00,362.50,2,5725.00),(2,2,'Test Part',2500.00,350.00,2,6400.00),(3,2,'Wiper Blade',275.00,38.50,2,704.00),(4,2,'Headlamp Assembly',3000.00,420.00,1,3840.00),(5,2,'Taillamp',2150.00,301.00,3,8256.00),(6,2,'Air Filter',275.00,38.50,1,352.00),(12,4,'Test Part',2500.00,350.00,2,6400.00),(13,4,'Wiper Blade',275.00,38.50,2,704.00),(14,4,'Headlamp Assembly',3000.00,420.00,1,3840.00),(15,4,'Taillamp',2150.00,301.00,3,8256.00),(16,4,'Air Filter',275.00,38.50,1,352.00);
 /*!40000 ALTER TABLE `bill_parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,6 +131,31 @@ LOCK TABLES `expenses` WRITE;
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
 INSERT INTO `expenses` VALUES (152,'parts sai',6170.00,'2013-08-26','0001',''),(153,'thayyil cement apm',3000.00,'2013-09-01','',''),(154,'parts sai',1635.00,'2013-09-02','',''),(155,'parts AM',1930.00,'2013-09-02','','REAR SKIRT PANEL ALTO 800'),(156,'EXPENSE  ',7910.00,'2013-09-02','','ALL EXPENSE 02-09-2013'),(157,'EXPEN',5500.00,'2013-09-03','',''),(158,'MALAPPURAM PAINT SHOP',2500.00,'2013-09-04','',''),(159,'WASHING',150.00,'2013-09-04','',''),(160,'EXPENSE',1620.00,'2013-09-04','',''),(161,'outside parts',380.00,'2013-09-05','',''),(162,'industrial expense',340.00,'2013-09-05','',''),(163,'EXPENSE',1240.00,'2013-09-05','',''),(164,'outside parts',3600.00,'2013-09-06','',''),(165,'EXPENSE',50.00,'2013-09-06','',''),(166,'outside parts',907.00,'2013-09-06','',''),(167,'WASHING',300.00,'2013-09-06','',''),(168,'EXPENSE',5590.00,'2013-09-07','',''),(169,'PETROL',100.00,'2013-09-07','',''),(170,'SALARY',14530.00,'2013-09-07','',''),(171,'outside parts',1655.00,'2013-09-09','',''),(172,'CORIER',100.00,'2013-09-09','',''),(173,'SALARY',500.00,'2013-09-07','','ANOOP PAINTER'),(174,'THANGAL PAINT SHOP',20000.00,'2013-09-09','',''),(175,'WASTE',2500.00,'2013-09-09','','50 KG'),(176,'SALARY',750.00,'2013-09-10','',''),(177,'parts sai MPM',298.00,'2013-09-10','',''),(178,'cargo charge',50.00,'2013-09-10','','able auto parts'),(179,'KURI MPM',20000.00,'2013-09-10','',''),(180,'outside parts',19840.00,'2013-09-11','',''),(181,'industrial expense',320.00,'2013-09-11','',''),(182,'WASHING',300.00,'2013-09-11','',''),(183,'WASHING',150.00,'2013-09-11','',''),(184,'food expense',200.00,'2013-09-11','',''),(185,'cargo charge',30.00,'2013-09-11','',''),(186,'carbade',150.00,'2013-09-12','',''),(187,'parts sai MPM',4048.00,'2013-09-12','',''),(188,'water',50.00,'2013-09-12','',''),(189,'PETROL',100.00,'2013-09-12','',''),(190,'outside parts',15.00,'2013-09-12','',''),(191,'outside parts',950.00,'2013-09-12','',''),(192,'parts sai MPM',140.00,'2013-09-13','',''),(193,'outside parts',880.00,'2013-09-13','',''),(194,'SALARY advance',3500.00,'2013-09-13','',''),(195,'parts sai',3356.00,'2013-09-12','',''),(196,'fuel - diesel arif',100.00,'2013-09-01','',''),(197,'fuel - diesel arif',100.00,'2013-09-10','',''),(198,'cargo charge',50.00,'2013-09-13','',''),(199,'outside parts',2365.00,'2013-09-13','',''),(200,'wheel alighment',180.00,'2013-09-13','',''),(201,'outside parts',6108.00,'2013-09-14','',''),(202,'sks parcel',30.00,'2013-09-14','',''),(203,'onam kit',1600.00,'2013-09-14','',''),(204,'BONUS',2500.00,'2013-09-14','',''),(205,'SALARY',14850.00,'2013-09-14','',''),(206,'outside parts',3650.00,'2013-09-16','',''),(207,'fuel - diesel arif',100.00,'2013-09-16','',''),(208,'HALOGEN BULB',100.00,'2013-09-16','',''),(209,'oxygen gas',375.00,'2013-09-14','',''),(210,'SALARY advance',500.00,'2013-09-17','',''),(211,'fuel - diesel arif',100.00,'2013-09-17','',''),(212,'outside parts',2540.00,'2013-09-18','',''),(213,'industrial expense',200.00,'2013-09-18','',''),(214,'SALARY',100.00,'2013-09-09','',''),(215,'outside parts',1500.00,'2013-09-18','',''),(216,'WASHING',150.00,'2013-09-18','',''),(217,'SALARY advance',500.00,'2013-09-18','','ARIF'),(218,'outside parts',2080.00,'2013-09-19','','ABLE'),(219,'outside parts',380.00,'2013-09-19','','HINDUSTAN CALICUT'),(220,'outside parts',450.00,'2013-09-19','','TOOL WORLD'),(221,'outside parts',585.00,'2013-09-19','','POOKKATTIL'),(222,'outside parts',330.00,'2013-09-19','','PANDI'),(223,'outside parts',700.00,'2013-09-19','','OLD BUMPER ZEN'),(224,'food expense',516.00,'2013-09-19','',''),(225,'HALOGEN BULB',200.00,'2013-09-19','',''),(226,'PETROL',100.00,'2013-09-19','',''),(227,'PETROL',200.00,'2013-09-19','',''),(228,'outside parts',850.00,'2013-09-20','',''),(229,'industrial expense',100.00,'2013-09-20','',''),(230,'outside parts',2320.00,'2013-09-20','','HEAD LIGHT ALTO'),(231,'outside parts',600.00,'2013-09-20','',''),(232,'WASTE',375.00,'2013-09-20','',''),(233,'water',50.00,'2013-09-20','',''),(234,'- BOSCH  parts',20000.00,'2013-09-20','',''),(235,'carbade',150.00,'2013-09-20','',''),(236,'SALARY',1500.00,'2013-09-20','','TRAINEE MECHANIC'),(237,'outside parts',370.00,'2013-09-20','','TOOL WORLD'),(238,'SALARY advance',1000.00,'2013-09-20','','UNAIS'),(239,'outside parts',1516.00,'2013-09-20','','ALTO AM RUNNING BOARD'),(240,'outside parts',130.00,'2013-09-21','','PANDI'),(241,'outside PAINTS',2000.00,'2013-09-21','','SEEQUENZE PMNA'),(242,'outside parts',2300.00,'2013-09-21','','OIL PMNA'),(243,'SALARY',500.00,'2013-09-21','','ANOOP'),(244,'outside parts',120.00,'2013-09-21','','SHAJI COOLING'),(245,'SALARY advance',2700.00,'2013-09-21','',''),(246,'outside parts',70.00,'2013-09-22','','GRINDING WHEEL, BOLT'),(247,'SALARY advance',200.00,'2013-09-22','','ARIF'),(248,'SALARY',650.00,'2013-09-22','','ACHAYAN MPM'),(249,'SALARY advance',500.00,'2013-09-22','','GIREESH SKY HIGH'),(250,'grinder bush ',60.00,'2013-09-23','',''),(251,'steering bush optra parts advance',500.00,'2013-09-23','',''),(252,'carbade',225.00,'2013-09-23','',''),(253,'SALARY advance',800.00,'2013-09-23','','sudharshan'),(254,'outside parts',200.00,'2013-09-23','','radiator tank'),(255,'parts sai',8025.00,'2013-09-23','',''),(256,'association membership',680.00,'2013-09-23','',''),(257,'ac gas ',560.00,'2013-09-23','',''),(258,'grinder repair',450.00,'2013-09-24','',''),(259,'industrial expense',320.00,'2013-09-24','',''),(260,'water',50.00,'2013-09-24','',''),(261,'outside parts',529.00,'2013-09-24','',''),(262,'polish pad',250.00,'2013-09-24','',''),(263,'SALARY',500.00,'2013-09-24','','mkb murali'),(264,'photostat',25.00,'2013-09-24','',''),(265,'hack saw blade',20.00,'2013-09-24','',''),(266,'SALARY advance',200.00,'2013-09-24','','arif'),(267,'photostat',47.00,'2013-09-25','',''),(268,'alto emblem',90.00,'2013-09-25','',''),(269,'polish pad',390.00,'2013-09-25','',''),(270,'outside parts',31.00,'2013-09-25','',''),(271,'parts sai MPM',100.00,'2013-09-25','',''),(272,'outside parts',2250.00,'2013-09-25','',''),(273,'over time',1000.00,'2013-09-25','','1000 saneesh & sudharshan'),(274,'outside parts',100.00,'2013-09-25','',''),(275,'outside parts',700.00,'2013-09-26','',''),(276,'outside parts',110.00,'2013-09-26','','flex gum'),(277,'parts sai',8380.00,'2013-09-26','',''),(278,'outside parts',4250.00,'2013-09-26','','pookkattil'),(279,'food expense',100.00,'2013-09-26','',''),(280,'PETROL',100.00,'2013-09-26','',''),(281,'industrial expense',300.00,'2013-09-26','','radaitor welding'),(282,'SALARY advance',500.00,'2013-09-26','','shafeeq'),(283,'SALARY advance',2000.00,'2013-09-26','','unais painter'),(284,'carbade',150.00,'2013-09-27','',''),(285,'grinder  old repaiir',580.00,'2013-09-27','',''),(286,'outside parts',1015.00,'2013-09-27','','pookkattil'),(287,'SALARY advance',500.00,'2013-09-27','','arif'),(288,'industrial expense',1200.00,'2013-09-27','','aluminium welding  zen 2 nos'),(289,'food expense',250.00,'2013-09-27','',''),(290,'marketing- letter writting',2000.00,'2013-09-27','',''),(291,'outside parts',5000.00,'2013-09-28','','banglore parts'),(292,'outside parts',10000.00,'2013-09-28','',''),(293,'sticker work vista',80.00,'2013-09-28','',''),(294,'WASHING',300.00,'2013-09-28','','2 nos'),(295,'outside parts',150.00,'2013-09-28','',''),(296,'outside parts',270.00,'2013-09-28','',''),(297,'SALARY advance',1700.00,'2013-09-28','',''),(298,'SALARY',600.00,'2013-09-28','',''),(299,'SALARY advance',1000.00,'2013-09-30','',''),(300,'outside parts',50.00,'2013-09-30','',''),(301,'water',100.00,'2013-09-30','',''),(302,'WASHING',350.00,'2013-09-30','','');
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance`
+--
+
+DROP TABLE IF EXISTS `insurance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `insurance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `insurance_name` varchar(200) NOT NULL,
+  `gstin` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance`
+--
+
+LOCK TABLES `insurance` WRITE;
+/*!40000 ALTER TABLE `insurance` DISABLE KEYS */;
+INSERT INTO `insurance` VALUES (1,'Reliance General Insurance Co Ltd','32AABCR6747B1ZP'),(2,'The New India Assurance Co Ltd','32AAACN4165C4ZXNI1234'),(3,'Uinted India Insurance Co Ltd','32AAACU5552C1ZS');
+/*!40000 ALTER TABLE `insurance` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -171,7 +197,7 @@ CREATE TABLE `jobsheet_charges` (
   `amount` decimal(10,2) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +206,7 @@ CREATE TABLE `jobsheet_charges` (
 
 LOCK TABLES `jobsheet_charges` WRITE;
 /*!40000 ALTER TABLE `jobsheet_charges` DISABLE KEYS */;
-INSERT INTO `jobsheet_charges` VALUES (5,111,4,2,300.00,NULL),(6,111,1,4,200.00,NULL),(7,112,2,1,6767.00,NULL),(8,112,4,1,7878.00,NULL),(10,113,2,1,123123.00,NULL),(11,113,1,1,12312.00,NULL),(38,15,2,3,1500.00,NULL),(39,15,1,1,500.00,NULL),(43,114,1,1,900.00,NULL),(44,114,2,3,5000.00,NULL),(45,115,2,1,500.00,NULL),(53,127,12,1,5000.00,''),(54,127,10,2,2500.00,''),(55,127,11,4,890.00,''),(58,129,12,2,500.00,'');
+INSERT INTO `jobsheet_charges` VALUES (5,111,4,2,300.00,NULL),(6,111,1,4,200.00,NULL),(7,112,2,1,6767.00,NULL),(8,112,4,1,7878.00,NULL),(10,113,2,1,123123.00,NULL),(11,113,1,1,12312.00,NULL),(38,15,2,3,1500.00,NULL),(39,15,1,1,500.00,NULL),(43,114,1,1,900.00,NULL),(44,114,2,3,5000.00,NULL),(45,115,2,1,500.00,NULL),(69,127,12,1,5000.00,''),(70,127,10,2,2500.00,''),(71,127,11,4,890.00,''),(74,129,12,2,500.00,'');
 /*!40000 ALTER TABLE `jobsheet_charges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +223,7 @@ CREATE TABLE `jobsheet_parts` (
   `part_id` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +232,7 @@ CREATE TABLE `jobsheet_parts` (
 
 LOCK TABLES `jobsheet_parts` WRITE;
 /*!40000 ALTER TABLE `jobsheet_parts` DISABLE KEYS */;
-INSERT INTO `jobsheet_parts` VALUES (15,15,1001,5),(16,15,1003,10),(17,15,10004,4),(22,114,1003,5),(23,114,1004,21),(24,128,1,2),(29,127,1,2),(30,127,2,2),(31,127,5,1),(32,127,6,3),(33,127,3,1),(49,129,7,10);
+INSERT INTO `jobsheet_parts` VALUES (15,15,1001,5),(16,15,1003,10),(17,15,10004,4),(22,114,1003,5),(23,114,1004,21),(24,128,1,2),(64,127,1,2),(65,127,2,2),(66,127,5,1),(67,127,6,3),(68,127,3,1),(71,129,7,10);
 /*!40000 ALTER TABLE `jobsheet_parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,17 +250,21 @@ CREATE TABLE `jobsheets` (
   `contact` varchar(50) NOT NULL,
   `created_on` datetime NOT NULL,
   `reg_no` varchar(50) NOT NULL,
-  `mileage` decimal(10,2) NOT NULL,
+  `vehicle_make` varchar(200) NOT NULL,
+  `vehicle_model` varchar(200) NOT NULL,
+  `mileage` int(11) NOT NULL,
   `chassis_no` varchar(100) CHARACTER SET latin1 NOT NULL,
   `engine_no` varchar(100) CHARACTER SET latin1 NOT NULL,
   `promised_date` datetime NOT NULL,
   `estimated_amount` decimal(10,2) NOT NULL,
   `works_done` text CHARACTER SET latin1 NOT NULL,
+  `is_claim` tinyint(4) NOT NULL DEFAULT '0',
+  `insurance_id` int(11) DEFAULT NULL,
   `status` varchar(20) CHARACTER SET latin1 NOT NULL,
   `notes` text CHARACTER SET latin1 NOT NULL,
   `delivered_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +273,7 @@ CREATE TABLE `jobsheets` (
 
 LOCK TABLES `jobsheets` WRITE;
 /*!40000 ALTER TABLE `jobsheets` DISABLE KEYS */;
-INSERT INTO `jobsheets` VALUES (115,'hasna','','9633314567','2013-08-26 00:00:00','kl-10-x-26',5000.00,'','','2013-08-27 00:00:00',500.00,'','close','',NULL),(116,'ABDUSSALAM','KADUNGAPURAM','9656621464','2013-07-03 00:00:00','KL-53-L-704',14030.00,'','','2013-07-03 00:00:00',1000.00,'','0','OIL CHANGE',NULL),(117,'Ashraf','','9847105701','2013-08-29 00:00:00','KL-13-T-4308',10000.00,'','','2013-08-29 00:00:00',2000.00,'','0','1.Power window switch\n2.A/C belt\n3.Fog lamb bulb\n4.Brake light bulb\n5.Alternator belt','2016-12-29'),(118,'Salam','Kallan kunnan(H)\r\nAngadippuram','9037288559','2013-08-29 00:00:00','KL-10-J-808',12000.00,'','','2013-08-29 00:00:00',40.00,'','0','General checkup',NULL),(119,'Ajeesh','Sreelakam(H)\r\nThootha','9895134925','2013-08-25 00:00:00','KL-51-D-4446',1200.00,'','','2013-08-25 00:00:00',3500.00,'','0','Rer door LH',NULL),(120,'Haneefa','Mannengal Kannamthodi(H)\r\nOnnaputa','8593990824','2013-08-25 00:00:00','KL-53-B-8638',189443.00,'','','2013-08-25 00:00:00',8300.00,'','0','Power window to check\r\nHarde brake to check',NULL),(121,'Krishna Raj','Krishna Kripa(H)\r\nPalode','9847696788','2013-08-25 00:00:00','KL-10-N-7790',20000.00,'','','2013-08-25 00:00:00',1700.00,'','0','Oil leake\r\nGeneral check\r\nFront brake O/A',NULL),(122,'Ram','Thirurkkad','9037941525','2013-08-26 00:00:00','KL-54-9016',63209.00,'','','2013-08-26 00:00:00',750.00,'','0','W/A\r\nCenter lock check\r\nsicerce check',NULL),(123,'Saleem','kachinikkad','9037941525','2013-08-24 00:00:00','KL-11-AK-1306',23456.00,'','','2013-08-24 00:00:00',4000.00,'','0','',NULL),(124,'Thangal','Thirurkkad','9961404313','2013-08-24 00:00:00','KL-53-7345',12345.00,'','','2013-08-24 00:00:00',6850.00,'','0','Patm check\r\n',NULL),(125,'BAVA','Angadippuram','9288703783','2013-08-21 00:00:00','KL-10-Q-8094',26391.00,'','','2013-08-21 00:00:00',7000.00,'','0','Ball joint R/A\r\nStealing bon O/H\r\nLH stock O/H\r\nW/A\r\nFront brake O/H\r\nRH Stock O/H',NULL),(126,'Abilash  ITL motors','ITL Motors','9037941525','2013-08-26 00:00:00','KL-10-P-1304',158000.00,'','','2013-08-26 00:00:00',1800.00,'','0','Oil leack\r\nFront brake O/H\r\nOil change',NULL),(127,'muhsin','angadippuram','9847665036','2016-12-29 00:00:00','KL-10-AE-6630',456.00,'','','2016-12-29 00:00:00',100.00,'','complete','','2016-12-29'),(128,'Nisar','','8547257874','2017-08-08 00:00:00','KL-07-BS-8068',85000.00,'','','2017-08-10 00:00:00',0.00,'','close','','2017-08-24'),(129,'dfgdf','','234234','2017-08-09 00:00:00','KL-13-T-4308',234234.00,'','','2017-08-10 00:00:00',0.00,'','0','',NULL);
+INSERT INTO `jobsheets` VALUES (115,'hasna','','9633314567','2013-08-26 00:00:00','kl-10-x-26','','',5000,'','','2013-08-27 00:00:00',500.00,'',0,NULL,'close','',NULL),(116,'ABDUSSALAM','KADUNGAPURAM','9656621464','2013-07-03 00:00:00','KL-53-L-704','','',14030,'','','2013-07-03 00:00:00',1000.00,'',0,NULL,'0','OIL CHANGE',NULL),(117,'Ashraf','','9847105701','2013-08-29 00:00:00','KL-13-T-4308','','',10000,'','','2013-08-29 00:00:00',2000.00,'',0,NULL,'0','1.Power window switch\n2.A/C belt\n3.Fog lamb bulb\n4.Brake light bulb\n5.Alternator belt','2016-12-29'),(118,'Salam','Kallan kunnan(H)\r\nAngadippuram','9037288559','2013-08-29 00:00:00','KL-10-J-808','','',12000,'','','2013-08-29 00:00:00',40.00,'',0,NULL,'0','General checkup',NULL),(119,'Ajeesh','Sreelakam(H)\r\nThootha','9895134925','2013-08-25 00:00:00','KL-51-D-4446','','',1200,'','','2013-08-25 00:00:00',3500.00,'',0,NULL,'0','Rer door LH',NULL),(120,'Haneefa','Mannengal Kannamthodi(H)\r\nOnnaputa','8593990824','2013-08-25 00:00:00','KL-53-B-8638','','',189443,'','','2013-08-25 00:00:00',8300.00,'',0,NULL,'0','Power window to check\r\nHarde brake to check',NULL),(121,'Krishna Raj','Krishna Kripa(H)\r\nPalode','9847696788','2013-08-25 00:00:00','KL-10-N-7790','','',20000,'','','2013-08-25 00:00:00',1700.00,'',0,NULL,'0','Oil leake\r\nGeneral check\r\nFront brake O/A',NULL),(122,'Ram','Thirurkkad','9037941525','2013-08-26 00:00:00','KL-54-9016','','',63209,'','','2013-08-26 00:00:00',750.00,'',0,NULL,'0','W/A\r\nCenter lock check\r\nsicerce check',NULL),(123,'Saleem','kachinikkad','9037941525','2013-08-24 00:00:00','KL-11-AK-1306','','',23456,'','','2013-08-24 00:00:00',4000.00,'',0,NULL,'0','',NULL),(124,'Thangal','Thirurkkad','9961404313','2013-08-24 00:00:00','KL-53-7345','','',12345,'','','2013-08-24 00:00:00',6850.00,'',0,NULL,'0','Patm check\r\n',NULL),(125,'BAVA','Angadippuram','9288703783','2013-08-21 00:00:00','KL-10-Q-8094','','',26391,'','','2013-08-21 00:00:00',7000.00,'',0,NULL,'0','Ball joint R/A\r\nStealing bon O/H\r\nLH stock O/H\r\nW/A\r\nFront brake O/H\r\nRH Stock O/H',NULL),(126,'Abilash  ITL motors','ITL Motors','9037941525','2013-08-26 00:00:00','KL-10-P-1304','','',158000,'','','2013-08-26 00:00:00',1800.00,'',0,NULL,'0','Oil leack\r\nFront brake O/H\r\nOil change',NULL),(127,'muhsin','angadippuram','9847665036','2016-12-29 00:00:00','KL-10-AE-6630','','',456,'','','2016-12-29 00:00:00',100.00,'',1,2,'close','','2016-12-29'),(128,'Nisar','','8547257874','2017-08-08 00:00:00','KL-07-BS-8068','','',85000,'','','2017-08-10 00:00:00',0.00,'',0,NULL,'close','','2017-08-24'),(129,'dfgdf','','234234','2017-08-09 00:00:00','KL-13-T-4308','Ford','Figo',234234,'','','2017-08-10 00:00:00',0.00,'',0,0,'complete','','2017-08-10'),(130,'dfgdf','','34534344','2017-08-10 00:00:00','34543','','',34534,'','','2017-08-13 00:00:00',0.00,'',1,1,'open','',NULL);
 /*!40000 ALTER TABLE `jobsheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,7 +377,7 @@ CREATE TABLE `payment_modes` (
 
 LOCK TABLES `payment_modes` WRITE;
 /*!40000 ALTER TABLE `payment_modes` DISABLE KEYS */;
-INSERT INTO `payment_modes` VALUES (1,'Cash'),(2,'Credit'),(3,'Insurance');
+INSERT INTO `payment_modes` VALUES (1,'Cash'),(2,'Credit');
 /*!40000 ALTER TABLE `payment_modes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,4 +472,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-09 14:32:17
+-- Dump completed on 2017-08-10 13:59:34
