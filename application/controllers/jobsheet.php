@@ -214,7 +214,7 @@ class Jobsheet extends MY_Controller {
                 "reg_no" => $this->input->post('reg_no'),
                 "vehicle_make" => $this->input->post('vehicle_make'),
                 "vehicle_model" => $this->input->post('vehicle_model'),
-                "mileage" => round($this->input->post('mileage'),2),
+                "mileage" => $this->input->post('mileage'),
                 "chassis_no" => $this->input->post('chassis_no'),
                 "engine_no" => $this->input->post('engine_no'),
                 "promised_date" => 
@@ -435,7 +435,7 @@ class Jobsheet extends MY_Controller {
                 "reg_no" => $this->input->post('reg_no'),
                 "vehicle_make" => $this->input->post('vehicle_make'),
                 "vehicle_model" => $this->input->post('vehicle_model'),
-                "mileage" => round($this->input->post('mileage'),2),
+                "mileage" => $this->input->post('mileage'),
                 "chassis_no" => $this->input->post('chassis_no'),
                 "engine_no" => $this->input->post('engine_no'),
                 "promised_date" => 
