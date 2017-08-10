@@ -72,6 +72,16 @@
                     <span class="small grey">(KL-10-A-1234)</span>
                 </p>
                 <p>
+                    <label for="vehicle_make">Vehicle Make:<span class="red">*</span></label>
+                    <input type="text" id="vehicle_make" name="vehicle_make"
+                           value="<?= set_value('vehicle_make', $jobsheet['vehicle_make']) ?>"/>
+                </p>
+                <p>
+                    <label for="vehicle_make">Vehicle Model:<span class="red">*</span></label>
+                    <input type="text" id="vehicle_model" name="vehicle_model"
+                           value="<?= set_value('vehicle_model', $jobsheet['vehicle_model']) ?>"/>
+                </p>
+                <p>
                     <label for="chassis_no">Chassis No:</label>
                     <input type="text" id="chassis_no" name="chassis_no"
                            value="<?= set_value('chassis_no', $jobsheet['chassis_no']) ?>"/>
@@ -80,6 +90,17 @@
                     <label for="engine_no">Engine No:</label>
                     <input type="text" id="engine_no" name="engine_no"
                            value="<?= set_value('engine_no', $jobsheet['engine_no']) ?>"/>
+                </p>                
+                 <p>
+                    <label for="engine_no">Insurance:</label>
+                    <?php 
+                        echo form_dropdown(
+                            'is_claim', 
+                            $insurances, 
+                            (isset($_POST['in_claim']) ? $_POST['is_claim'] : $jobsheet['is_claim']),
+                            'id="is_claim"'
+                        );
+                    ?>
                 </p>
                 <p>
                     <label for="notes">Special Notes:</label>

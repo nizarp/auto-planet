@@ -94,6 +94,7 @@ class Billing extends MY_Controller {
         $this->load->model('jobsheet_model');
         $this->load->model('billing_model');
         $this->load->model('part_model');
+        $this->load->model('insurance_model');
         
         $this->form_validation->set_error_delimiters('<div class="red">', '</div>');
         $data['title'] = 'Create Bill';
@@ -102,13 +103,17 @@ class Billing extends MY_Controller {
         $data['jobsheet'] = $jobsheet = $this->jobsheet_model->get($jobsheetId);
         $data['billNo'] = $this->billing_model->getNextBillNo();
         
-        if($jobsheet['status'] != 'complete') {
+        if($jobsheet['status'] != 'complete' && $jobsheet['status'] != 'close') {
             redirect('billing', 'refresh');
         }
         
         $data['paymentModes'] = $this->billing_model->getPaymentModes();
         $data['jobsheet']['labour_charges'] = $this->jobsheet_model->getLabourCharges($jobsheetId);
         $data['jobsheet']['jobsheet_parts'] = $this->jobsheet_model->getJobsheetParts($jobsheetId);
+
+        if($jobsheet['is_claim'] != 0 && $jobsheet['insurance_id'] != '') {
+            $data['insurance'] = $this->insurance_model->getInsuranceData($jobsheet['insurance_id']);
+        }
 
         $this->config->load('ap_settings');
         $data['labourTaxSgst'] = $this->config->item('labour_tax_sgst');
@@ -153,6 +158,10 @@ class Billing extends MY_Controller {
                 'round_off' => $this->input->post('round_off'),
                 'grand_total' => $this->input->post('grand_total')
             );
+
+            if($jobsheet['is_claim'] != 0 && $jobsheet['insurance_id'] != '') {
+                $data['billing_address'] = $this->input->post('billing_address');
+            }
             
             $this->billing_model->deleteBill($jobsheetId);
             

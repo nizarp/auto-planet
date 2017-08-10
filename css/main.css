@@ -649,6 +649,25 @@ div.jqi button {
     width: 95%;
   }
 
+#salary {width: 150px;}
+#staff_role {width: 160px;}
+#is-claim-label {
+    display: inline !important;
+}
+
+#billing_address {
+    width: 300px;
+    height: 125px;
+}
+
+
+
+
+
+
+
+
+
 @media print {
   body * {
     visibility: hidden;
@@ -662,6 +681,10 @@ div.jqi button {
       border:none;
       margin-top: -8px;
       margin-left: -8px;
+  }
+
+  #billing_address {
+    border: none;
   }
   
   #round_off { border: none; }
@@ -684,7 +707,3 @@ div.jqi button {
         margin: 0mm;  /* this affects the margin in the printer settings */
     }
 }
-
-/**** Staff ****/
-#salary {width: 150px;}
-#staff_role {width: 160px;}

@@ -12,6 +12,10 @@ $('document').ready(function() {
             });
         }
     });
+
+    $('.bill-view-btn').click(function(){
+        self.location = '/index.php/billing/create/'+$(this).attr('rel');
+    });
     
     $('#create-bill-btn').click(function(){
         var jobsheet = $(this).parent().find('select').val();

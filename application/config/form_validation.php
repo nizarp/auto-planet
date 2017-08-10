@@ -30,7 +30,17 @@ $config = array(
               'field'   => 'reg_no', 
               'label'   => 'Registration Number', 
               'rules'   => 'required|registration_check|min_length[5]'
-           )        
+           ),
+        array(
+              'field'   => 'vehicle_make', 
+              'label'   => 'Vehicle Make', 
+              'rules'   => 'required'
+           ),
+        array(
+              'field'   => 'vehicle_model', 
+              'label'   => 'Vehicle Model', 
+              'rules'   => 'required'
+           )    
     ),
     'expense_form' => array(
         array(

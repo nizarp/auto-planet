@@ -14,7 +14,7 @@
             <?php 
                 echo form_dropdown('jobsheets', $jobsheets);
             ?>
-            <input type="button" id="create-bill-btn" value="Create Bill">
+            <input type="button" id="create-bill-btn" value="Generate Bill">
         </div>
         <?php echo form_open('billing/search'); ?>
             <div id="billing-search">
@@ -59,6 +59,8 @@
                     <td><?php echo date('M d, Y', strtotime($bill['bill_date'])) ?></td>
                     <td>                        
                         <?php if($username == 'admin'): ?>
+                        <img class="bill-view-btn" rel="<?php echo $bill['jobsheet_id'] ?>" 
+                             src="/css/images/view.png">&nbsp;
                         <img class="bill-delete-btn" rel="<?php echo $bill['id'] ?>" 
                              src="/css/images/delete.png">
                         <? endif; ?>

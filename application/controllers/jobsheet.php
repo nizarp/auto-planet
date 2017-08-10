@@ -110,14 +110,18 @@ class Jobsheet extends MY_Controller {
         foreach($parts as $part) {
             $partsList[$part['id']] = $this->getPartNameForAutoComplete($part);
         }
-        $data['parts'] = $partsList;
-        
+        $data['parts'] = $partsList;        
+
+        $data['insurances'] = $this->getInsuranceData();
+
         $data['jobsheet'] = array(
             "id" => '',
             "name" => '',
             "address" => '',
             "contact" => '',
             "created_on" => date('d/m/Y'),
+            "vehicle_make" => '',
+            "vehicle_model" => '',
             "reg_no" => '',
             "mileage" => '',
             "chassis_no" => '',
@@ -125,6 +129,7 @@ class Jobsheet extends MY_Controller {
             "promised_date" => '',
             "delivered_date" => '',
             "estimated_amount" => '',
+            "is_claim" => 0,
             "status" => '',
             "notes" => ''
         );
@@ -207,6 +212,8 @@ class Jobsheet extends MY_Controller {
                 "created_on" => 
                     date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('created_on')))),
                 "reg_no" => $this->input->post('reg_no'),
+                "vehicle_make" => $this->input->post('vehicle_make'),
+                "vehicle_model" => $this->input->post('vehicle_model'),
                 "mileage" => round($this->input->post('mileage'),2),
                 "chassis_no" => $this->input->post('chassis_no'),
                 "engine_no" => $this->input->post('engine_no'),
@@ -221,6 +228,14 @@ class Jobsheet extends MY_Controller {
                 "status" => 'open',
                 "notes" => $this->input->post('notes')
             );
+
+            if($this->input->post('is_claim') == 0) {
+                $data['is_claim'] = 0;
+                $data['insurance_id'] = '';
+            } else {
+                $data['is_claim'] = 1;
+                $data['insurance_id'] = $this->input->post('is_claim');
+            }
             
             $this->jobsheet_model->create($data);
             $jobsheetId = $this->db->insert_id();
@@ -327,6 +342,8 @@ class Jobsheet extends MY_Controller {
         }
         $data['staffs'] = $staffList;
         
+        $data['insurances'] = $this->getInsuranceData();
+
         $partsList = array('' => 'Select Part');
         $parts = $this->part_model->getAll();
         foreach($parts as $part) {
@@ -416,6 +433,8 @@ class Jobsheet extends MY_Controller {
                 "created_on" => 
                     date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('created_on')))),
                 "reg_no" => $this->input->post('reg_no'),
+                "vehicle_make" => $this->input->post('vehicle_make'),
+                "vehicle_model" => $this->input->post('vehicle_model'),
                 "mileage" => round($this->input->post('mileage'),2),
                 "chassis_no" => $this->input->post('chassis_no'),
                 "engine_no" => $this->input->post('engine_no'),
@@ -430,6 +449,14 @@ class Jobsheet extends MY_Controller {
                 "status" => $this->input->post('status'),
                 "notes" => $this->input->post('notes')
             );
+
+            if($this->input->post('is_claim') == 0) {
+                $data['is_claim'] = 0;
+                $data['insurance_id'] = '';
+            } else {
+                $data['is_claim'] = 1;
+                $data['insurance_id'] = $this->input->post('is_claim');
+            }
             
             $this->jobsheet_model->update($id, $data);
             $this->jobsheet_model->updateJobsheetCharges($id, $labourInput);
@@ -440,7 +467,8 @@ class Jobsheet extends MY_Controller {
         
     }
 
-    function getPartNameForAutoComplete($part) {
+    function getPartNameForAutoComplete($part) 
+    {
 
         $formattedName = $part['part_name'];
 
@@ -453,6 +481,19 @@ class Jobsheet extends MY_Controller {
         }
 
         return $formattedName;
+    }
+
+    function getInsuranceData() 
+    {
+        $this->load->model('insurance_model');
+
+        $insuranceList = array(0 => '== No Insurance Claim ==');
+        $insurances = $this->insurance_model->getAll();
+        foreach($insurances as $insurance) {
+            $insuranceList[$insurance->id] = $insurance->insurance_name;
+        }
+        
+        return $insuranceList;
     }
 
 }

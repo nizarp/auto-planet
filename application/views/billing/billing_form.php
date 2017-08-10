@@ -30,38 +30,41 @@
             <p><div id="sub-head">Invoice</div></p>
 
             <div id="bill-details">        
-            <div class="grid_1 alpha">
-                <p>
-                    <label>Jobsheet No.:</label>
-                    <?= $jobsheet['id'] ?>
-                </p>
+            <div class="grid_1 alpha">                                
                 <p>
                     <label>Customer Name:</label>
                     <?= ucwords($jobsheet['name']) ?>
+                </p>
+                <p>
+                    <label>Customer Contact:</label>
+                    <?= $jobsheet['contact'] ?>
                 </p>
                 <p>
                     <label>Reg. No.:</label>
                     <?= $jobsheet['reg_no'] ?>
                 </p>
                 <p>
+                    <label>Vehicle Make:</label>
+                    <?= $jobsheet['vehicle_make'] ?>
+                </p>
+                <p>
+                    <label>Vehicle Model:</label>
+                    <?= $jobsheet['vehicle_model'] ?>
+                </p>
+                <p>
+                    <label>Mileage:</label>
+                    <?= $jobsheet['mileage'] ?>
+                </p>
+                <p>
                     <label>Chassis No.:</label>
                     <?= $jobsheet['chassis_no'] ?>
                 </p>
-                <div>
-                    <label for="payment_mode">Payment Mode:</label>
-                <div id="payment_wrapper">
-                    <?php 
-                        echo form_dropdown(
-                            'payment_mode', 
-                            $paymentModes, 
-                            (isset($_POST['payment_mode']) ? $_POST['payment_mode'] : $bill['payment_mode']),
-                            'id="payment_mode"'
-                        );
-                    ?>
-                </div>
-                </div>                
             </div>
             <div class="grid_2 beta">
+                <p>
+                    <label>Jobsheet No.:</label>
+                    <?= $jobsheet['id'] ?>
+                </p>
                 <p>
                     <label>Bill No.:</label>   
                     <?= $billNo ?>
@@ -70,14 +73,45 @@
                     <label>Bill Date:</label>   
                     <?= date('d/m/Y') ?>
                     <?php echo form_hidden('bill_date', date('Y-m-d')) ?>
-                </p>
+                </p>                
+                <?php if(isset($insurance) && !empty($insurance)) { ?>
+                    <p>
+                        <label>Insurance:</label>
+                        <?= $insurance['insurance_name'] ?>
+                    </p>
+                    <p>
+                        <label>GSTIN:</label>
+                        <?= $insurance['gstin'] ?>
+                    </p>
+                <?php } ?>
+                <div>
+                    <label for="payment_mode">Payment Mode:</label>
+                    <div id="payment_wrapper">
+                        <?php 
+                            if($jobsheet['status'] != 'close') {
+                                echo form_dropdown(
+                                    'payment_mode', 
+                                    $paymentModes, 
+                                    (isset($_POST['payment_mode']) ? $_POST['payment_mode'] : $bill['payment_mode']),
+                                    'id="payment_mode"'
+                                );
+                            } else {
+                                echo $bill['payment_mode'];
+                            }
+                        ?>
+                    </div>
+                </div>  
                 <p>
-                    <label>Contact:</label>
-                    <?= $jobsheet['contact'] ?>
-                </p>
-                <p>
-                    <label>Address:</label>
-                    <div class="address-div"><?= nl2br($jobsheet['address']) ?></div>
+                    <label>Billing Address:</label>
+                    <div class="address-div">
+                        <?php
+                            if($jobsheet['is_claim'] == 0) {
+                                echo nl2br($jobsheet['address']);
+                            } else {
+                                echo '<textarea maxlength="120" name="billing_address" id="billing_address"></textarea>';
+                            } 
+                        ?>              
+                    </div>
                 </p>
             </div>
             </div>
@@ -298,9 +332,14 @@
         <div class="clear"></div>      
     </div>        
         
-    <div class="nextprev">
-        <input type="button" value="Preview Print" onClick="window.print();">
-        <input type="submit" value="Save &amp; Print" onClick="window.print();">
+    <div class="nextprev">        
+        <?php if($jobsheet['status'] != 'close') { ?>
+            <input type="button" value="Print Preview" onClick="window.print();">
+            <input type="submit" value="Save &amp; Print" onClick="window.print();">
+            <input type="submit" value="Save" />
+        <?php } else { ?>
+            <input type="button" value="Print" onClick="window.print();">
+        <?php } ?>
         <input type="button" onclick="window.location='/index.php/billing'" value="Cancel">
     </div>
 </form>
