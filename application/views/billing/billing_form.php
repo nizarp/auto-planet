@@ -116,10 +116,9 @@
             </div>
             </div>
         <div class="clear"></div>    
-        
-        <p><h3>Parts Description:</h3></p>
-        <div id="bill-parts-details">            
-            <?php if(isset($jobsheet['jobsheet_parts'])) { ?>
+        <?php if(!empty($jobsheet['jobsheet_parts'])) { ?>
+            <p><h3>Parts Description:</h3></p>
+            <div id="bill-parts-details">            
                 <?php $i = 1; ?>
                 <?php $partsTotal = 0; ?>
                 <div id="bill-labour-item">
@@ -204,6 +203,7 @@
                     $partsTotal+= $total;
                     ?>
                 <?php } ?>
+
                 <div id="bill-labour-item">
                     <div class="bill-parts-sno"><strong>&nbsp;</strong></div>
                     <div class="bill-parts-pno"><strong>&nbsp;</strong></div>
@@ -213,11 +213,11 @@
                     <div class="bill-parts-tax"><strong>&nbsp;</strong></div>
                     <div class="bill-parts-qty border-top"><strong>Total:</strong></div>
                     <div class="bill-parts-tax border-top"><?= number_format($partsTotal, 2) ?></div>
-                </div>
-                <input type="hidden" value="<?= $partsTotal ?>" id="parts_total" />
-            <?php } ?>
-        </div>
-
+                </div>                
+            </div>
+        <?php } else { $partsTotal = 0; } ?>
+        <input type="hidden" value="<?= $partsTotal ?>" id="parts_total" />
+        
         <p><h3>Labour Details:</h3></p>
         <div id="bill-labour-details">            
             <?php if(isset($jobsheet['labour_charges'])) { ?>

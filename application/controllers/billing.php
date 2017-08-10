@@ -186,19 +186,20 @@ class Billing extends MY_Controller {
                 
                 // Parts
                 $billParts = $this->input->post('bill_parts');
-                foreach($billParts as $billPart) {
-                    $data = array(
-                        'bill_id' => $billingId,
-                        'part_name' => $billPart['part_name'],
-                        'rate' => $billPart['rate'],
-                        'tax' => $billPart['tax'],
-                        'quantity' => $billPart['quantity'],
-                        'total' => $billPart['total']
-                    );
-                    
-                    $this->billing_model->insertBillParts($data);                    
+                if(!empty($billParts)) {
+                    foreach($billParts as $billPart) {
+                        $data = array(
+                            'bill_id' => $billingId,
+                            'part_name' => $billPart['part_name'],
+                            'rate' => $billPart['rate'],
+                            'tax' => $billPart['tax'],
+                            'quantity' => $billPart['quantity'],
+                            'total' => $billPart['total']
+                        );
+                        
+                        $this->billing_model->insertBillParts($data);                    
+                    }
                 }
-                
                 $status = array('status' => 'close');
                 $this->jobsheet_model->update($jobsheetId, $status);
             }
